@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarea Listas Pasajeros</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1A73E8;--blue-l:#E8F0FE;--blue-d:#1558B0;--green:#34A853;--green-l:#E6F4EA;--green-d:#1B6B35;--amber:#F9AB00;--amber-l:#FEF7E0;--amber-d:#7A4F00;--red:#EA4335;--red-l:#FCE8E6;--red-d:#B3261E;--purple:#7B3FE4;--purple-l:#F3E8FD;--purple-d:#5A2AAB;--teal:#00897B;--teal-l:#E0F2F1;--teal-d:#004D40;--text:#202124;--text2:#5F6368;--bg:#F8F9FA;--white:#fff;--border:#DADCE0;--code-bg:#1e1e1e;--code-t:#d4d4d4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;color:var(--text);background:var(--bg);line-height:1.65;font-size:15.5px}
+header{position:sticky;top:0;z-index:10;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;padding:.7rem 1.25rem}
+header h1{font-size:15px;color:var(--blue);font-weight:600}
+.prog{margin-left:auto;width:240px;font-size:12px;color:var(--text2)}
+.bar{background:var(--border);height:8px;border-radius:9px;overflow:hidden;margin-top:3px}#bar{height:8px;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .3s}
+nav.toc{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin:1.25rem 0}
+nav.toc a{color:var(--blue-d);text-decoration:none;display:inline-block;margin:.15rem .9rem .15rem 0;font-size:14px}
+main{max-width:920px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;background:var(--purple-l);color:var(--purple-d)}
+.title{font-size:30px;font-weight:700;line-height:1.2;margin:.6rem 0 .3rem}.sub{color:var(--text2)}
+h2{font-size:21px;margin:2.5rem 0 .8rem;padding-top:.5rem;border-top:1px solid var(--border)}h3{font-size:16px;margin:1.4rem 0 .5rem}
+p{margin-bottom:.8rem}code{font-family:'Fira Code',monospace;font-size:12.5px;background:var(--blue-l);color:var(--blue-d);padding:1px 5px;border-radius:4px}
+.box{border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}.box-t{font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.45rem}
+.b-blue{background:var(--blue-l);border-left:4px solid var(--blue)}.b-blue .box-t{color:var(--blue-d)}
+.b-green{background:var(--green-l);border-left:4px solid var(--green)}.b-green .box-t{color:var(--green-d)}
+.b-amber{background:var(--amber-l);border-left:4px solid var(--amber)}.b-amber .box-t{color:var(--amber-d)}
+.b-red{background:var(--red-l);border-left:4px solid var(--red)}.b-red .box-t{color:var(--red-d)}
+.b-purple{background:var(--purple-l);border-left:4px solid var(--purple)}.b-purple .box-t{color:var(--purple-d)}
+.box code{background:rgba(255,255,255,.7)}
+ul.ok{list-style:none}ul.ok li{padding-left:1.4rem;position:relative;margin:.25rem 0}ul.ok li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.mal,.bien{border-radius:10px;padding:1rem;font-size:14px}.mal{background:var(--red-l);border-left:4px solid var(--red)}.bien{background:var(--green-l);border-left:4px solid var(--green)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:1rem 0;background:var(--white)}th{background:var(--blue);color:#fff;text-align:left;padding:.55rem .7rem;font-size:12px;text-transform:uppercase}td{padding:.5rem .7rem;border-bottom:1px solid var(--border);vertical-align:top}tr:nth-child(even) td{background:var(--bg)}
+.code-wrap{margin:.9rem 0}.code-header{background:#2d2d2d;border-radius:8px 8px 0 0;padding:.45rem 1rem;display:flex;justify-content:space-between;align-items:center}.code-lang{font-size:12px;color:#aaa;font-family:'Fira Code',monospace}
+.btn-copy{font-size:12px;padding:3px 11px;border-radius:5px;border:0;background:#3c3c3c;color:#ccc;cursor:pointer}.btn-copy.ok{background:var(--green);color:#fff}
+pre.code-body{background:var(--code-bg);color:var(--code-t);padding:1rem 1.2rem;border-radius:0 0 8px 8px;overflow-x:auto;font-family:'Fira Code',monospace;font-size:13px;line-height:1.7;white-space:pre}
+pre.tree{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;font-family:'Fira Code',monospace;font-size:13px;overflow-x:auto}
+.road{display:flex;flex-direction:column}.ri{display:flex;gap:1rem;position:relative}.ri:not(:last-child):after{content:"";position:absolute;left:19px;top:40px;bottom:0;width:3px;background:var(--border)}
+.dot{width:40px;height:40px;border-radius:50%;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}.rc{padding-bottom:1.2rem}.rc h4{font-size:15px}.rc p{font-size:13.5px;color:var(--text2);margin:0}
+.card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:12px;margin:1rem 0;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.1rem;cursor:pointer}.card-head:hover{background:var(--bg)}
+.num{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.card-title{flex:1;font-weight:600}.arrow{color:var(--text2)}.card-body{display:none;border-top:1px solid var(--border);padding:1.1rem}.card.open .card-body{display:block}
+.badge{font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;text-transform:uppercase}.b-basico{background:var(--green-l);color:var(--green-d)}.b-medio{background:var(--amber-l);color:var(--amber-d)}.b-avanzado{background:var(--purple-l);color:var(--purple-d)}
+.que{font-weight:500}.muted{color:var(--text2);font-weight:400}
+.paso-t{font-weight:600;font-size:14px;margin:.9rem 0 .4rem;display:flex;align-items:center;gap:.5rem}.pn{width:22px;height:22px;border-radius:50%;background:var(--purple);color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+.eps{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}.eps-box{border-radius:8px;padding:.55rem .75rem;font-size:13.5px}.eps-e{background:var(--blue-l)}.eps-p{background:var(--amber-l)}.eps-s{background:var(--green-l)}.eps-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2)}
+.bosquejo{background:#FFFDF5;border:1px dashed #E0C97F;border-radius:8px;padding:.7rem 1rem}.bosq-lbl{font-size:11px;font-weight:700;color:#8B6914;text-transform:uppercase}.bosquejo pre{font-family:'Fira Code',monospace;font-size:12.5px;white-space:pre-wrap;color:#4A3B00}
+.descubrimiento{background:var(--purple-l);border-radius:8px;padding:.7rem 1rem;font-size:14px}
+.io{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.io-box{border:1px solid var(--border);border-radius:8px;padding:.55rem .75rem;font-size:13px;font-family:'Fira Code',monospace}.io-lbl{font-family:Inter;font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--text2)}
+.errores{background:var(--red-l);border-radius:8px;padding:.6rem .9rem;margin-top:.8rem;font-size:13.5px}
+.chk{display:inline-flex;gap:.45rem;align-items:center;margin-top:.9rem;font-weight:600;color:var(--green-d);cursor:pointer;font-size:14px}.chk input{width:17px;height:17px;accent-color:var(--green)}
+.checklist label{display:flex;gap:.5rem;align-items:flex-start;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:14px;cursor:pointer}.checklist input{margin-top:4px;accent-color:var(--green)}
+@media(max-width:700px){.dos,.eps,.io{grid-template-columns:1fr}.prog{display:none}.title{font-size:24px}}
+
+.table-scroll{max-width:100%;overflow-x:auto;margin:1rem 0}
+.table-scroll table{margin:0}
+.project-table{table-layout:fixed}
+.project-table th:first-child{width:40%}
+.project-table th:nth-child(2){width:42%}
+.project-table th:nth-child(3){width:18%}
+.project-table td,.project-table th{overflow-wrap:break-word}
+.code-wrap,.rc{min-width:0;max-width:100%}
+@media(max-width:700px){
+  .project-table th,.project-table td{padding:.55rem .4rem;font-size:11px}
+  .project-table code{font-size:10.5px;padding:1px 2px;white-space:nowrap}
+  pre.tree{font-size:12.5px;padding:1rem}
+}
+</style></head><body>
+<header><h1>🐍 U3 · Tarea guiada · Listas</h1><div class="prog">Avance: <span id="pct">0</span>%<div class="bar"><div id="bar"></div></div></div></header>
+<main>
+<span class="tag">U3 · Estructuras · Semanas 7-8 · 📋 Listas</span>
+<div class="title">Tarea guiada: Sistema de pasajeros con dos listas</div>
+<p class="sub">La misma clase de datos, el mismo menú… y dos formas de construir la lista: <b>a mano</b> (como <code>MiLista</code>) y con el <b><code>list</code> de Python</b>. Al final verás, línea por línea, qué hace Python por ti.</p>
+
+<nav class="toc"><b>Contenido:</b><br>
+<a href="#objetivo">1. Objetivo</a><a href="#proyecto">2. El proyecto</a><a href="#datos">3. Datos de prueba</a><a href="#reglas">4. Reglas</a><a href="#ruta">5. Ruta de trabajo</a><a href="#f0">Fase 0</a><a href="#f1">Fase 1 · Lista 1</a><a href="#f2">Fase 2 · Menú Lista 1</a><a href="#f3">Fase 3 · Lista 2</a><a href="#f4">Fase 4 · Menú Lista 2</a><a href="#f5">Fase 5 · Ejercicios</a><a href="#entrega">Entrega y rúbrica</a><a href="#codigo">Código completo</a></nav>
+
+<h2 id="objetivo">1. Objetivo</h2>
+<div class="box b-purple"><div class="box-t">🎯 Al terminar podrás</div><ul class="ok">
+<li>Implementar todas las operaciones de lista del módulo 7 sobre <b>objetos</b> (no solo números): añadir, insertar, buscar lineal y binaria, modificar, eliminar por posición y por valor, ordenar, reversar, copiar y longitud.</li>
+<li>Explicar qué pasa <b>por dentro</b> cuando Python hace <code>insert</code>, <code>pop</code> o <code>sort</code> (corrimientos, comparaciones, intercambios).</li>
+<li>Usar <b>list comprehensions</b> para filtrar y transformar en una línea.</li>
+<li>Conectar clases con un <b>menú de opciones</b> siguiendo siempre el mismo patrón: leer → llamar → mostrar.</li>
+<li>Resolver los <b>8 ejercicios</b> del módulo (3 desarrollados + 5 propuestos) en archivos independientes, desde <code>ejercicio1.py</code> hasta <code>ejercicio8.py</code>.</li></ul></div>
+
+<h2 id="proyecto">2. El proyecto organizado por archivos</h2>
+<p>Los <b>12 archivos Python</b> están completos. Cada ejercicio tiene su propio archivo, una función y ejecución directa.</p>
+<pre class="tree">tarea_listas/
+├── pasajero.py
+├── lista_manual.py
+├── lista_python.py
+├── ejercicio1.py
+├── ejercicio2.py
+├── ejercicio3.py
+├── ejercicio4.py
+├── ejercicio5.py
+├── ejercicio6.py
+├── ejercicio7.py
+├── ejercicio8.py
+└── main.py</pre>
+<div class="table-scroll"><table class="project-table"><tr><th>Archivo</th><th>Contenido</th><th>Estado</th></tr><tr><td><code>pasajero.py</code></td><td>Clase Pasajero de la guía</td><td>✅ Listo</td></tr><tr><td><code>lista_manual.py</code></td><td>Lista 1: los 13 métodos manuales</td><td>✅ Listo</td></tr><tr><td><code>lista_python.py</code></td><td>Lista 2: los 13 métodos con Python</td><td>✅ Listo</td></tr><tr><td><code>ejercicio1.py</code></td><td>T1 · CRUD de pasajeros</td><td>✅ Listo</td></tr><tr><td><code>ejercicio2.py</code></td><td>T2 · Estadísticas de notas</td><td>✅ Listo</td></tr><tr><td><code>ejercicio3.py</code></td><td>T3 · Ordenar con burbuja</td><td>✅ Listo</td></tr><tr><td><code>ejercicio4.py</code></td><td>P1 · Contar apariciones</td><td>✅ Listo</td></tr><tr><td><code>ejercicio5.py</code></td><td>P2 · Invertir una lista</td><td>✅ Listo</td></tr><tr><td><code>ejercicio6.py</code></td><td>P3 · Únicos conservando el orden</td><td>✅ Listo</td></tr><tr><td><code>ejercicio7.py</code></td><td>P4 · Segundo mayor</td><td>✅ Listo</td></tr><tr><td><code>ejercicio8.py</code></td><td>P5 · Fusionar listas ordenadas</td><td>✅ Listo</td></tr><tr><td><code>main.py</code></td><td>Menú principal y los dos submenús de listas</td><td>✅ Listo</td></tr></table></div>
+<div class="box b-blue"><div class="box-t">▶ Cómo ejecutar</div>
+<p>Guarda los 12 archivos en la carpeta <code>tarea_listas</code>. Ejecuta <code>python main.py</code> para trabajar con las listas de pasajeros.</p>
+<p>El menú principal contiene: <b>1. Lista 1</b>, <b>2. Lista 2</b> y <b>3. Salir</b>.</p>
+<p>Para los ejercicios, ejecuta el archivo correspondiente: <code>python ejercicio1.py</code>, <code>python ejercicio2.py</code> y así hasta <code>python ejercicio8.py</code>. En Mac/Linux también puedes usar <code>python3</code>.</p></div>
+
+<h2 id="datos">3. Datos de prueba (opción <code>C</code> del menú)</h2>
+<p>Todas las pruebas de esta guía usan estos 5 pasajeros. Cárgalos con <code>C</code> en lugar de escribirlos cada vez.</p>
+<div class="table-scroll"><table><tr><th>Posición</th><th>Nombre</th><th>Cédula</th><th>Edad</th><th>Posición si se ordena por cédula</th></tr>
+<tr><td>[0]</td><td>Diana</td><td>0923456789</td><td>22</td><td>[2]</td></tr>
+<tr><td>[1]</td><td>Ana</td><td>0912345678</td><td>28</td><td>[1]</td></tr>
+<tr><td>[2]</td><td>Luis</td><td>0987654321</td><td>35</td><td>[4]</td></tr>
+<tr><td>[3]</td><td>Beto</td><td>0934567890</td><td>16 (menor)</td><td>[3]</td></tr>
+<tr><td>[4]</td><td>Elena</td><td>0901234567</td><td>41</td><td>[0]</td></tr></table></div>
+
+<h2 id="reglas">4. Las reglas del juego</h2>
+<div class="dos">
+<div class="mal"><b>LISTA 1 · <code>lista_manual.py</code> — a mano</b><br><br>⛔ Prohibido: <code>append</code>, <code>insert</code>, <code>pop</code>, <code>remove</code>, <code>index</code>, <code>sort</code>, <code>sorted</code>, <code>reverse</code>, <code>reversed</code>, <code>copy</code>, <code>len()</code>, <code>x in lista</code>, slicing y comprensiones.<br><br>✅ Permitido: índices <code>datos[i]</code>, <code>while</code>, <code>for i in range()</code>, <code>if</code>, variable <code>aux</code>, <code>self.cantidad</code>.</div>
+<div class="bien"><b>LISTA 2 · <code>lista_python.py</code> — modo Python</b><br><br>✅ Usa todo lo de Python: <code>append</code>, <code>insert</code>, <code>pop</code>, <code>remove</code>, <code>sort(key=…)</code>, <code>reverse</code>, <code>copy</code>, <code>len</code>, <code>enumerate</code>, <code>bisect</code>.<br><br>🧩 <b>Comprensión obligatoria</b> en: <code>buscar</code>, <code>buscar_binaria</code>, <code>eliminar_por_valor</code>, <code>filtrar_mayores_de_edad</code>, <code>nombres_en_mayusculas</code>.</div></div>
+<div class="box b-amber"><div class="box-t">📌 Regla de oro (módulo 0)</div><p>Para <b>cada</b> método aplica los 5 pasos: <b>1</b> Entrada/Proceso/Salida → <b>2</b> bosquejo a mano con los datos de prueba → <b>3</b> descubrir el patrón → <b>4</b> código → <b>5</b> prueba de escritorio. Si no puedes resolverlo en el cuaderno, no lo vas a poder programar.</p></div>
+
+<h2 id="ruta">5. Ruta de trabajo (hazlo en este orden)</h2>
+<div class="road">
+<div class="ri"><div class="dot" style="background:var(--text2)">0</div><div class="rc"><h4>Fase 0 · Explorar lo que ya funciona</h4><p>Ejecuta, carga datos, lista, añade. Lee <code>añadir</code> y <code>listar</code>.</p></div></div>
+<div class="ri"><div class="dot" style="background:var(--blue)">1</div><div class="rc"><h4>Fase 1 · Lista 1: los 13 métodos de <code>lista_manual.py</code></h4><p>En el orden de las tarjetas: de lo fácil a lo difícil y de lo que se reutiliza a lo que reutiliza.</p></div></div>
+<div class="ri"><div class="dot" style="background:var(--green)">2</div><div class="rc"><h4>Fase 2 · Conectar las opciones 3 a 15 del menú de la Lista 1</h4><p>Revisa las opciones completas siguiendo el patrón leer → llamar → mostrar.</p></div></div>
+<div class="ri"><div class="dot" style="background:var(--amber)">3</div><div class="rc"><h4>Fase 3 · Lista 2: los 13 métodos de <code>lista_python.py</code></h4><p>Mismo resultado, mucho menos código. Aquí entran las comprensiones.</p></div></div>
+<div class="ri"><div class="dot" style="background:var(--teal)">4</div><div class="rc"><h4>Fase 4 · <code>menu_lista2()</code> completo</h4><p>Misma estructura que la Lista 1. Debe dar la <b>misma salida</b>.</p></div></div>
+<div class="ri"><div class="dot" style="background:var(--purple)">5</div><div class="rc"><h4>Fase 5 · Ocho archivos de ejercicios</h4><p>Desde <code>ejercicio1.py</code> hasta <code>ejercicio8.py</code>, cada uno ejecutable por separado.</p></div></div>
+</div>
+
+<h2 id="f0">Fase 0 · Explorar lo que ya funciona</h2>
+<p><b>Paso 1.</b> Ejecuta <code>python main.py</code> → <code>1</code> (Lista 1) → <code>C</code> → <code>2</code>. Debes ver los 5 pasajeros de la tabla.</p>
+<p><b>Paso 2.</b> Opción <code>1</code>: añade a <i>Xavi · 0999999999 · 19</i> y vuelve a listar: aparece en <code>[5]</code>.</p>
+<p><b>Paso 3.</b> Lee el método resuelto <code>añadir</code>. Todo el resto de la clase se basa en estas 3 ideas:</p>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Python — lista_manual.py · añadir (resuelto)</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def añadir(self, pasajero):
+    if self.cantidad == self.capacidad:      # 1. ¿hay espacio?
+        print(&quot;⚠ La lista está llena&quot;)
+        return False
+    self.datos[self.cantidad] = pasajero     # 2. primer cajón libre
+    self.cantidad = self.cantidad + 1        # 3. un ocupado más
+    return True</pre></div>
+<p><b>Paso 4.</b> Lee cómo se conectó la opción 1 en <code>main.py</code>. <b>Todas</b> las opciones que hagas seguirán este patrón de 3 pasos:</p>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Python — main.py · menu_lista1 (resuelto)</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">if op == &quot;1&quot;:
+    pasajero = leer_pasajero()          # 1. LEER lo que necesita el método
+    if lista1.añadir(pasajero):         # 2. LLAMAR al método
+        print(&quot;  ✓ Pasajero añadido&quot;)   # 3. MOSTRAR el resultado
+
+elif op == &quot;2&quot;:
+    lista1.listar()</pre></div>
+<div class="box b-green"><div class="box-t">🔁 Patrón del menú: LEER → LLAMAR → MOSTRAR</div><p>La clase <b>no</b> hace <code>input()</code>: recibe los datos por parámetro y retorna un resultado. El menú es quien pregunta al usuario y quien muestra. Así la misma clase sirve para un menú de consola, una página web o una API.</p></div>
+<label class="chk"><input type="checkbox" onchange="upd()"> Fase 0 terminada: ejecuté, cargué datos, añadí y listé</label>
+
+<h2 id="f1">Fase 1 · Lista 1 — método por método</h2>
+<p>Abre cada tarjeta, resuelve en el cuaderno, programa en <code>lista_manual.py</code> (el docstring de cada método trae los pasos) y prueba <b>de inmediato</b>. Para probar un método antes de tener el menú, puedes pegar al final de <code>lista_manual.py</code>:</p>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Python — prueba rápida (al final de lista_manual.py)</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">if __name__ == &quot;__main__&quot;:
+    lista = ListaPasajerosManual()
+    lista.añadir(Pasajero(&quot;Diana&quot;, &quot;0923456789&quot;, 22))
+    lista.añadir(Pasajero(&quot;Ana&quot;,   &quot;0912345678&quot;, 28))
+    lista.añadir(Pasajero(&quot;Luis&quot;,  &quot;0987654321&quot;, 35))
+    print(lista.buscar(&quot;0987654321&quot;))   # debe imprimir 2
+    lista.listar()</pre></div>
+<div class="box b-blue"><div class="box-t">🧭 ¿Por qué este orden?</div><p><code>buscar</code> va temprano porque <code>modificar</code> y <code>eliminar_por_valor</code> lo reutilizan; <code>eliminar_por_posicion</code> va antes de <code>eliminar_por_valor</code> por la misma razón; <code>ordenar_asc</code> va antes de <code>buscar_binaria</code> porque la binaria necesita la lista ordenada.</p></div>
+
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">1</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>longitud()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Retorna cuántos pasajeros hay.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>leer el atributo que ya cuenta</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div><code>int</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>cantidad = 5  →  return 5</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">No hay patrón: el dato <b>ya está guardado</b> en <code>self.cantidad</code>. Recorrer la lista para contar sería trabajo inútil.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>13</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Hay 5 pasajeros</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Retornar <code>self.capacidad</code> (10): esos son los cajones, no los pasajeros.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">2</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>buscar(cedula)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Busca un pasajero por cédula revisando uno por uno.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div><code>cedula</code></div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>comparar cada <code>datos[i].cedula</code></div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>posición o <code>-1</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>buscar 0987654321
+i=0 Diana 0923… ≠ → sigo
+i=1 Ana   0912… ≠ → sigo
+i=2 Luis  0987… == → return 2</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">🔴 <b>Búsqueda lineal</b> del módulo 0. Se recorre solo hasta <code>cantidad</code> (los demás cajones son <code>None</code>).</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>4</code> → 0987654321<br><code>4</code> → 1111111111</div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Encontrado en [2]: Luis …<br>No existe</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Recorrer <code>range(self.capacidad)</code>: al llegar a un <code>None</code> explota con <code>AttributeError: 'NoneType' has no attribute 'cedula'</code>.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">3</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>modificar(cedula, nombre, edad)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Cambia nombre y edad del pasajero con esa cédula.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>cédula, nuevo nombre, nueva edad</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div><code>buscar</code> + reemplazar atributos</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div><code>True</code> / <code>False</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>pos = buscar(0934567890) → 3
+datos[3].nombre = &#x27;Roberto&#x27;
+datos[3].edad   = 17</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento"><b>Reutilizar</b>: un método llama a otro. Si escribes otra vez el <code>for</code> de búsqueda, estás duplicando código.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>6</code> → 0934567890, Roberto, 17 → <code>2</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>[3] Roberto | cédula: 0934567890 | 17 años</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Hacer <code>datos[pos] = nuevo_nombre</code>: reemplazas al <b>objeto Pasajero</b> entero por un texto.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">4</span><span class="badge b-medio">Medio</span>
+    <span class="card-title"><code>insertar(posicion, pasajero)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Mete un pasajero en una posición corriendo los demás a la DERECHA.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>posición y pasajero</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>abrir un hueco corriendo de atrás hacia adelante</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div><code>True</code> / <code>False</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>[Diana, Ana, Luis, None]   insertar(1, Xavi)
+i=3: datos[3]=datos[2] → [Diana, Ana, Luis, Luis]
+i=2: datos[2]=datos[1] → [Diana, Ana, Ana, Luis]
+i=1 → sale; datos[1]=Xavi → [Diana, Xavi, Ana, Luis]</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Corrimiento a la <b>derecha</b>. Por un momento aparecen repetidos: no es error, el paso siguiente lo corrige. Mira el diagrama «Insertar» del módulo 7.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div>Añade Diana, Ana, Luis → <code>3</code> → posición 1 → Xavi</div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>[0] Diana [1] Xavi [2] Ana [3] Luis</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Recorrer de adelante hacia atrás: pisas a Ana antes de moverla y la pierdes.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">5</span><span class="badge b-medio">Medio</span>
+    <span class="card-title"><code>eliminar_por_posicion(pos)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Quita el pasajero de esa posición y lo RETORNA.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>posición</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>guardar el valor y correr a la izquierda</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>el <code>Pasajero</code> quitado o <code>None</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>[Diana, Ana, Luis, Beto, Elena]  eliminar(0)
+valor = Diana
+i=0..3: datos[i] = datos[i+1]
+→ [Ana, Luis, Beto, Elena, Elena]
+datos[4] = None ; cantidad = 4</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Corrimiento a la <b>izquierda</b> (de adelante hacia atrás). El último cajón usado queda en <code>None</code>.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>7</code> → 0 → <code>2</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>✓ Eliminado: Diana …<br>[0] Ana [1] Luis [2] Beto [3] Elena</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Olvidar <code>datos[cantidad-1] = None</code> o no restar <code>cantidad</code>: la lista sigue mostrando a Elena dos veces.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">6</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>eliminar_por_valor(cedula)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Quita el pasajero que tenga esa cédula.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>cédula</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div><code>buscar</code> + <code>eliminar_por_posicion</code></div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div><code>True</code> / <code>False</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>pos = buscar(0987654321) → 2
+eliminar_por_posicion(2)</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Dos métodos que ya tienes. Este método debería tener <b>4 o 5 líneas</b>, no más.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>8</code> → 0987654321 → <code>2</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Luis ya no aparece</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Copiar otra vez el bucle de correr a la izquierda en lugar de llamar a <code>eliminar_por_posicion</code>.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">7</span><span class="badge b-medio">Medio</span>
+    <span class="card-title"><code>ordenar_asc()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Ordena de menor a mayor cédula con el método burbuja.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>comparar vecinos e intercambiar si están al revés</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>la lista ordenada</div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>vuelta 0: compara 4 pares → el mayor (Luis 0987…) llega al final
+vuelta 1: compara 3 pares …
+Resultado: Elena, Ana, Diana, Beto, Luis</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Dos <code>for</code> anidados y un intercambio con <code>aux</code> (como dos vasos y un tercer vaso vacío). Se compara <code>.cedula</code>, no el objeto.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>9</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Elena(0901) Ana(0912) Diana(0923) Beto(0934) Luis(0987)</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Comparar <code>datos[i] &gt; datos[i+1]</code> (objetos): <code>TypeError: '&gt;' not supported between instances of 'Pasajero'</code>.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">8</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>ordenar_desc()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Ordena de mayor a menor cédula.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>la misma burbuja con UN cambio</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>la lista ordenada al revés</div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>¿Qué condición hace que el MAYOR quede primero?
+Prueba con 2 cédulas en el cuaderno.</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Descubre qué símbolo cambia. <b>No uses</b> <code>ordenar_asc()</code> + <code>reversar()</code>: el objetivo es entender la comparación.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>10</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Luis, Beto, Diana, Ana, Elena</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Cambiar también los rangos de los <code>for</code>: no hace falta.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">9</span><span class="badge b-avanzado">Avanzado</span>
+    <span class="card-title"><code>buscar_binaria(cedula)</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Busca partiendo la lista por la mitad (la lista DEBE estar ordenada).</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>cédula</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div><code>izq</code>, <code>der</code>, <code>medio</code></div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>posición o <code>-1</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>ordenada: Elena 0901 · Ana 0912 · Diana 0923 · Beto 0934 · Luis 0987
+buscar 0923456789
+izq=0 der=4 medio=2 → Diana == → return 2  (¡1 comparación!)</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">El «diccionario de papel»: cada comparación descarta la mitad. Con 1 000 000 pasajeros, máximo 20 comparaciones.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>9</code> → <code>5</code> → 0923456789</div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Encontrado en [2]: Diana …</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Usarla sin ordenar antes: puede decir «No existe» aunque el pasajero esté.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">10</span><span class="badge b-medio">Medio</span>
+    <span class="card-title"><code>reversar()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Invierte el orden: el primero pasa a ser el último.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>dos punteros que se acercan intercambiando</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>la lista invertida</div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>izq=0 der=4 → intercambio Diana↔Elena
+izq=1 der=3 → intercambio Ana↔Beto
+izq=2 der=2 → se encontraron, fin</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Patrón de <b>dos punteros</b>. La condición es <code>izq &lt; der</code> (si usas <code>&lt;=</code> intercambias el del centro consigo mismo: inofensivo pero inútil).</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>11</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Elena, Beto, Luis, Ana, Diana</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Recorrer toda la lista intercambiando: al pasar la mitad la vuelves a dejar como estaba.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">11</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>copiar()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Crea OTRA ListaPasajerosManual con los mismos pasajeros.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>nueva lista + <code>añadir</code> de cada uno</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>una <code>ListaPasajerosManual</code> nueva</div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>nueva = ListaPasajerosManual(10)
+for i in range(cantidad): nueva.añadir(datos[i])</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Si haces <code>copia = self</code> NO copias nada: son dos nombres para la misma lista. Por eso la opción 12 reversa la copia y lista el original.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>12</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>COPIA: Elena … Diana<br>ORIGINAL: Diana … Elena (sin cambios)</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Retornar <code>self.datos</code>: es el mismo arreglo, reversar la «copia» daña el original.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">12</span><span class="badge b-medio">Medio</span>
+    <span class="card-title"><code>filtrar_mayores_de_edad()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Retorna una NUEVA lista solo con los pasajeros de 18 años o más.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>recorrer + <code>if</code> + añadir a otra lista</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>nueva <code>ListaPasajerosManual</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>Diana 22 ✓ · Ana 28 ✓ · Luis 35 ✓ · Beto 16 ✗ · Elena 41 ✓</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Es lo que hace una <b>comprensión con if</b>, pero a mano. En la Lista 2 lo harás en UNA línea: compara.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>14</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>Diana, Ana, Luis, Elena (Beto no)</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Eliminar a los menores de la lista original: el método debe <b>retornar otra lista</b> sin tocar la original.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="card">
+  <div class="card-head" onclick="tog(this)">
+    <span class="num">13</span><span class="badge b-basico">Básico</span>
+    <span class="card-title"><code>nombres_en_mayusculas()</code></span><span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <p class="que">Retorna un arreglo con los nombres en mayúsculas.</p>
+    <div class="paso-t"><span class="pn">1</span> Entender</div><div class="eps"><div class="eps-box eps-e"><div class="eps-lbl">Entrada</div>nada</div><div class="eps-box eps-p"><div class="eps-lbl">Proceso</div>transformar cada elemento</div><div class="eps-box eps-s"><div class="eps-lbl">Salida</div>arreglo de <code>str</code></div></div>
+    <div class="paso-t"><span class="pn">2</span> Bosquejo a mano</div>
+    <div class="bosquejo"><div class="bosq-lbl">✍️ En el cuaderno</div><pre>resultado = [None]*5
+resultado[0] = &#x27;DIANA&#x27; … resultado[4] = &#x27;ELENA&#x27;</pre></div>
+    <div class="paso-t"><span class="pn">3</span> Patrón</div>
+    <div class="descubrimiento">Es una <b>comprensión que transforma</b>, hecha a mano: arreglo del tamaño justo y se llena por índice.</div>
+    <div class="paso-t"><span class="pn">4</span> Código → <span class="muted">escríbelo en <code>lista_manual.py</code> siguiendo el docstring del método</span></div>
+    <div class="paso-t"><span class="pn">5</span> Prueba de escritorio / prueba en el menú</div>
+    <div class="io"><div class="io-box"><div class="io-lbl">Haz esto</div><code>C</code> → <code>15</code></div>
+    <div class="io-box"><div class="io-lbl">Debe salir</div>['DIANA', 'ANA', 'LUIS', 'BETO', 'ELENA']</div></div>
+    <div class="errores"><b>⚠️ Error típico:</b> Hacer <code>datos[i].nombre = datos[i].nombre.upper()</code>: modificas a los pasajeros reales.</div>
+    <label class="chk"><input type="checkbox" onchange="upd()"> Completado</label>
+  </div>
+</div>
+<div class="box b-amber"><div class="box-t">🔧 Mejora final de la Fase 1</div><p>Ahora que <code>buscar</code> funciona, vuelve a <code>añadir</code> e impide cédulas repetidas: <code>if self.buscar(pasajero.cedula) != -1:</code> → mensaje y <code>return False</code>. Prueba: <code>C</code> y luego <code>C</code> otra vez → solo debe haber 5.</p></div>
+
+<h2 id="f2">Fase 2 · Conectar el menú de la Lista 1 (opciones 3 a 15)</h2>
+<p>En <code>main.py</code>, dentro de <code>menu_lista1()</code>, las opciones completas aplican LEER → LLAMAR → MOSTRAR:</p>
+<div class="table-scroll"><table><tr><th>Op.</th><th>LEER</th><th>LLAMAR</th><th>MOSTRAR</th></tr>
+<tr><td>3</td><td><code>leer_entero</code> + <code>leer_pasajero()</code></td><td><code>insertar(pos, p)</code></td><td>✓ Insertado</td></tr>
+<tr><td>4</td><td>cédula</td><td><code>buscar(ced)</code></td><td>«No existe» o <code>lista1.datos[pos]</code></td></tr>
+<tr><td>5</td><td>cédula</td><td><code>buscar_binaria(ced)</code></td><td>igual que 4 + aviso «ordena primero»</td></tr>
+<tr><td>6</td><td>cédula, nombre, <code>leer_entero</code></td><td><code>modificar(…)</code></td><td>✓ Modificado</td></tr>
+<tr><td>7</td><td><code>leer_entero</code></td><td><code>eliminar_por_posicion(pos)</code></td><td>✓ Eliminado: <i>pasajero retornado</i></td></tr>
+<tr><td>8</td><td>cédula</td><td><code>eliminar_por_valor(ced)</code></td><td>✓ Eliminado</td></tr>
+<tr><td>9 · 10 · 11</td><td>—</td><td><code>ordenar_asc / ordenar_desc / reversar</code></td><td><code>listar()</code></td></tr>
+<tr><td>12</td><td>—</td><td><code>copia = copiar()</code>; <code>copia.reversar()</code></td><td>copia y original (el original NO cambia)</td></tr>
+<tr><td>13</td><td>—</td><td><code>longitud()</code></td><td>Hay N pasajeros</td></tr>
+<tr><td>14</td><td>—</td><td><code>filtrar_mayores_de_edad()</code></td><td><code>.listar()</code> sobre la lista retornada</td></tr>
+<tr><td>15</td><td>—</td><td><code>nombres_en_mayusculas()</code></td><td><code>print(nombres)</code></td></tr></table></div>
+<div class="box b-red"><div class="box-t">⚠️ Validación</div><p>Prueba también los casos malos: posición <code>99</code> en la opción 3 y 7, cédula inexistente en 4, 6 y 8, binaria sin ordenar. El programa debe mostrar un mensaje, <b>nunca cerrarse con error</b>.</p></div>
+<label class="chk"><input type="checkbox" onchange="upd()"> Fase 2 terminada: las 15 opciones + C de la Lista 1 funcionan</label>
+
+<h2 id="f3">Fase 3 · Lista 2 con el <code>list</code> de Python</h2>
+<p>Los mismos 13 métodos están completos en <code>lista_python.py</code>. Ten abierto <code>lista_manual.py</code> al lado: los comentarios indican cuántas líneas tiene cada método manual.</p>
+<div class="table-scroll"><table><tr><th>Método</th><th>Lista 1 (a mano)</th><th>Lista 2 (Python)</th></tr>
+<tr><td>longitud</td><td><code>self.cantidad</code></td><td><code>len(self.pasajeros)</code></td></tr>
+<tr><td>insertar</td><td>while corriendo a la derecha</td><td><code>insert(pos, p)</code></td></tr>
+<tr><td>buscar</td><td>for + if + return i</td><td>🧩 <code>[i for i, p in enumerate(…) if p.cedula == ced]</code></td></tr>
+<tr><td>buscar_binaria</td><td>izq · der · medio</td><td>🧩 <code>[p.cedula for p in …]</code> + <code>bisect_left</code></td></tr>
+<tr><td>modificar</td><td>buscar + asignar</td><td>buscar + asignar</td></tr>
+<tr><td>eliminar_por_posicion</td><td>for corriendo a la izquierda</td><td><code>pop(pos)</code></td></tr>
+<tr><td>eliminar_por_valor</td><td>buscar + eliminar_por_posicion</td><td>🧩 <code>[p for p in … if p.cedula != ced]</code> (y <code>remove</code> comentado)</td></tr>
+<tr><td>ordenar_asc / desc</td><td>burbuja con <code>aux</code></td><td><code>sort(key=lambda p: p.cedula, reverse=…)</code></td></tr>
+<tr><td>reversar</td><td>dos punteros</td><td><code>reverse()</code></td></tr>
+<tr><td>copiar</td><td>nueva lista + añadir</td><td><code>copy()</code> o <code>[:]</code></td></tr>
+<tr><td>filtrar_mayores_de_edad</td><td>for + if + añadir</td><td>🧩 <code>[p for p in … if p.es_mayor_de_edad()]</code></td></tr>
+<tr><td>nombres_en_mayusculas</td><td>arreglo + for por índice</td><td>🧩 <code>[p.nombre.upper() for p in …]</code></td></tr></table></div>
+<h3>🧩 Recordatorio: list comprehensions</h3>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Python — comprensiones</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body"># Transformar                       # Filtrar
+[p.nombre.upper() for p in lista]      [p for p in lista if p.edad &gt;= 18]
+
+# Con posición (enumerate)
+[i for i, p in enumerate(lista) if p.cedula == cedula]
+
+# Equivalente con for (lo que la comprensión hace por ti)
+resultado = []
+for p in lista:
+    if p.edad &gt;= 18:
+        resultado.append(p)</pre></div>
+<div class="box b-purple"><div class="box-t">🔎 Para pensar y responder en comentarios</div><ul class="ok">
+<li>En <code>ordenar_asc</code>: ¿qué hace <code>key=</code>? ¿Qué error sale si lo quitas?</li>
+<li>En <code>copiar</code>: reversa la copia (original intacto). Luego modifica un pasajero de la copia y lista el original… ¿qué pasó y por qué? (copia <b>superficial</b>).</li>
+<li>En <code>insertar</code>: <code>insert</code> parece «gratis», pero ¿Python corre los elementos o no? ¿Qué complejidad tiene?</li></ul></div>
+<label class="chk"><input type="checkbox" onchange="upd()"> Fase 3 terminada: los 13 métodos de la Lista 2 + las 5 comprensiones</label>
+
+<h2 id="f4">Fase 4 · <code>menu_lista2()</code> completo</h2>
+<p><b>Paso 1.</b> Copia la estructura de <code>menu_lista1()</code> con el título <code>"LISTA 2 · list de Python"</code>.</p>
+<p><b>Paso 2.</b> Cambia <code>lista1</code> por <code>lista2</code> en las opciones 1 a 15 y C.</p>
+<p><b>Paso 3.</b> Diferencia: para mostrar un pasajero encontrado usa <code>lista2.pasajeros[pos]</code> (en la Lista 1 era <code>lista1.datos[pos]</code>).</p>
+<p><b>Paso 4.</b> Prueba de comparación: haz la misma secuencia en las dos listas — <code>C → 9 → 5 (0923456789) → 12 → 14 → 15 → 8 (0987654321) → 7 (0) → 2</code>. Las pantallas deben ser <b>idénticas</b>.</p>
+<div class="box b-green"><div class="box-t">🚀 Reto opcional (POO)</div><p>¿Notaste que <code>menu_lista1</code> y <code>menu_lista2</code> son casi iguales? Crea una sola función <code>menu_lista(lista, titulo)</code> que funcione con cualquiera de las dos: es <b>polimorfismo</b> (módulo 6), porque las dos clases tienen los mismos métodos.</p></div>
+<label class="chk"><input type="checkbox" onchange="upd()"> Fase 4 terminada: la Lista 2 da la misma salida que la Lista 1</label>
+
+<h2 id="f5">Fase 5 · Ejercicio 1, ejercicio 2… ejercicio 8</h2>
+<p>Los tres ejercicios desarrollados y los cinco propuestos se ejecutan en <b>ocho archivos independientes</b>. Cada archivo imprime el enunciado, usa los datos de prueba y muestra los resultados.</p>
+<div class="table-scroll"><table><tr><th>Archivo</th><th>Código y ejercicio</th><th>Tipo</th><th>Resultado esperado</th></tr>
+<tr><td><code>ejercicio1.py</code></td><td>T1 · CRUD de pasajeros</td><td>Desarrollado</td><td>Añadir, listar, buscar, modificar, eliminar y ordenar por nombre</td></tr>
+<tr><td><code>ejercicio2.py</code></td><td>T2 · Estadísticas de notas</td><td>Desarrollado</td><td>Promedio 7.20 · Máx 10 (Diana) · Mín 5 · Aprobados 3 de 5</td></tr>
+<tr><td><code>ejercicio3.py</code></td><td>T3 · Ordenar con burbuja</td><td>Desarrollado</td><td>[1, 2, 3, 5, 7, 8, 9]</td></tr>
+<tr><td><code>ejercicio4.py</code></td><td>P1 · Contar apariciones</td><td>Propuesto</td><td>3 aparece 3 veces</td></tr>
+<tr><td><code>ejercicio5.py</code></td><td>P2 · Invertir una lista</td><td>Propuesto</td><td>[5, 4, 3, 2, 1]</td></tr>
+<tr><td><code>ejercicio6.py</code></td><td>P3 · Únicos conservando el orden</td><td>Propuesto</td><td>[1, 3, 2, 4, 5]</td></tr>
+<tr><td><code>ejercicio7.py</code></td><td>P4 · Segundo mayor</td><td>Propuesto</td><td>Mayor 9 · Segundo 8</td></tr>
+<tr><td><code>ejercicio8.py</code></td><td>P5 · Fusionar listas ordenadas</td><td>Propuesto</td><td>[1, 2, 3, 4, 5, 6, 7, 8, 10]</td></tr>
+</table></div>
+<p><b>Paso 1.</b> Revisa la función de cada archivo. Cuando el enunciado lo pide, se muestran las versiones ✋ manual y 🐍 Python para comparar.</p>
+<p><b>Paso 2.</b> Abre una terminal en la carpeta del proyecto y ejecuta el ejercicio por su nombre:</p>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Terminal — un archivo por ejercicio</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">python ejercicio1.py
+python ejercicio2.py
+python ejercicio3.py
+python ejercicio4.py
+python ejercicio5.py
+python ejercicio6.py
+python ejercicio7.py
+python ejercicio8.py</pre></div>
+<p><b>Ejemplo:</b> al ejecutar <code>python ejercicio2.py</code> se muestra:</p>
+<div class="code-wrap"><div class="code-header"><span class="code-lang">Salida de ejercicio2.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">T2 — Estadísticas de una lista de notas
+MANUAL: Promedio 7.20 · Máx 10 (Diana) · Mín 5 · Aprobados 3 de 5
+PYTHON: Promedio 7.20 · Máx 10 (Diana) · Mín 5 · Aprobados 3 de 5</pre></div>
+<label class="chk"><input type="checkbox" onchange="upd()"> Fase 5 terminada: ejecuté los ocho archivos y comparé sus resultados</label>
+
+<h2 id="entrega">Entrega y rúbrica</h2>
+<div class="checklist">
+<label><input type="checkbox" onchange="upd()"> La Lista 1 no usa ningún método prohibido (revisé con Ctrl+F: <code>append</code>, <code>len(</code>, <code>sort</code>…).</label>
+<label><input type="checkbox" onchange="upd()"> <code>modificar</code> y <code>eliminar_por_valor</code> reutilizan <code>buscar</code> (no repiten el bucle).</label>
+<label><input type="checkbox" onchange="upd()"> La Lista 2 usa comprensión en los 5 métodos obligatorios.</label>
+<label><input type="checkbox" onchange="upd()"> <code>añadir</code> no permite cédulas repetidas en ninguna de las dos listas.</label>
+<label><input type="checkbox" onchange="upd()"> Las dos listas producen la misma salida con los datos de prueba.</label>
+<label><input type="checkbox" onchange="upd()"> El programa nunca se cierra con error ante datos inválidos.</label>
+<label><input type="checkbox" onchange="upd()"> Respondí en comentarios las 3 preguntas de la Fase 3.</label>
+<label><input type="checkbox" onchange="upd()"> Entrego la carpeta comprimida con los 12 archivos <code>.py</code>, incluidos <code>ejercicio1.py</code> hasta <code>ejercicio8.py</code>.</label></div>
+<div class="table-scroll"><table><tr><th>Criterio</th><th>Puntos</th></tr>
+<tr><td>Lista 1: 13 métodos correctos y sin métodos prohibidos</td><td>3.0</td></tr>
+<tr><td>Lista 2: 13 métodos correctos con built-ins y comprensiones obligatorias</td><td>2.5</td></tr>
+<tr><td>Menús de Lista 1 y Lista 2 completos (leer → llamar → mostrar) y con validación</td><td>1.5</td></tr>
+<tr><td>Ocho archivos: 3 desarrollados + 5 propuestos, con versiones manual y Python cuando se solicitan</td><td>2.0</td></tr>
+<tr><td>Orden del código, comentarios y respuestas de la Fase 3</td><td>1.0</td></tr>
+<tr><td><b>Total</b></td><td><b>10</b></td></tr></table></div>
+
+<h2 id="codigo">Código completo de los 12 archivos</h2>
+<p>Guarda cada bloque con el nombre indicado dentro de <code>tarea_listas</code>. Cada botón copia el contenido de un solo archivo.</p>
+<h3>📄 pasajero.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — pasajero.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body"># =====================================================================
+#  pasajero.py  —  CLASE DE DOMINIO (ya está terminada, NO la modifiques)
+# ---------------------------------------------------------------------
+#  Un Pasajero es el &quot;dato&quot; que vamos a guardar en las dos listas.
+#  La CÉDULA es la clave: no puede haber dos pasajeros con la misma.
+# =====================================================================
+
+
+class Pasajero:
+    &quot;&quot;&quot;Representa a un pasajero de la aerolínea.&quot;&quot;&quot;
+
+    def __init__(self, nombre, cedula, edad):
+        self.nombre = nombre      # str  -&gt; &quot;Ana&quot;
+        self.cedula = cedula      # str  -&gt; &quot;0912345678&quot;  (clave única)
+        self.edad = edad          # int  -&gt; 28
+
+    def es_mayor_de_edad(self):
+        &quot;&quot;&quot;Retorna True si el pasajero tiene 18 años o más.&quot;&quot;&quot;
+        return self.edad &gt;= 18
+
+    def __str__(self):
+        &quot;&quot;&quot;Así se ve un pasajero cuando haces print(pasajero).&quot;&quot;&quot;
+        return f&quot;{self.nombre:&lt;10} | cédula: {self.cedula} | {self.edad} años&quot;</pre></div>
+<h3>📄 lista_manual.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — lista_manual.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body"># =====================================================================
+#  lista_manual.py  —  LISTA 1: construida DESDE CERO (como MiLista)
+# ---------------------------------------------------------------------
+#  Esta clase imita la clase MiLista del módulo 7 de la guía.
+#  Por dentro hay un ARREGLO de tamaño fijo con cajones vacíos (None).
+#
+#      datos     -&gt; [Ana, Beto, Carlos, None, None, ...]
+#      capacidad -&gt; cuántos cajones hay en total          (10)
+#      cantidad  -&gt; cuántos cajones están ocupados        (3)
+#
+#  LAS DOS REGLAS QUE EXPLICAN TODA LA CLASE
+#    1. Los pasajeros van SEGUIDOS: de datos[0] a datos[cantidad-1].
+#       No puede haber huecos (None) en medio.
+#    2. Para INSERTAR se corre a la DERECHA (de atrás hacia adelante).
+#       Para ELIMINAR se corre a la IZQUIERDA (de adelante hacia atrás).
+#
+#  ⛔ PROHIBIDO en esta clase (aquí se trabaja &quot;a mano&quot;):
+#     append, insert, pop, remove, index, sort, sorted, reverse,
+#     reversed, copy, len(), el operador &quot;x in lista&quot; para buscar,
+#     slicing [a:b] ni comprensiones.  (for i in range(...) SÍ se puede)
+#  ✅ PERMITIDO: índices datos[i], while, for i in range(...), if,
+#     variables auxiliares (aux), y self.cantidad / self.capacidad.
+#
+#  📌 Método de trabajo para CADA método (el método de 5 pasos):
+#     1) Entrada / Proceso / Salida   2) Bosquejo a mano con datos
+#     3) Descubrir el patrón          4) Escribir el código
+#     5) Prueba de escritorio
+#
+#  Los métodos están completados según los pasos de la guía.
+# =====================================================================
+
+from pasajero import Pasajero
+
+
+class ListaPasajerosManual:
+
+    def __init__(self, capacidad=10):
+        self.datos = [None] * capacidad   # los &quot;cajones&quot;
+        self.capacidad = capacidad        # cuántos cajones hay
+        self.cantidad = 0                 # cuántos están ocupados
+
+    # -----------------------------------------------------------------
+    # 1. AÑADIR  ✅ YA RESUELTO (úsalo como modelo)
+    # -----------------------------------------------------------------
+    def añadir(self, pasajero):
+        &quot;&quot;&quot;Pone el pasajero en el primer cajón libre (al final).&quot;&quot;&quot;
+        if self.cantidad == self.capacidad:
+            print(&quot;⚠ La lista está llena&quot;)
+            return False
+        if self.buscar(pasajero.cedula) != -1:
+            print(&quot;⚠ Ya existe un pasajero con esa cédula&quot;)
+            return False
+        self.datos[self.cantidad] = pasajero
+        self.cantidad = self.cantidad + 1
+        return True
+
+    # -----------------------------------------------------------------
+    # 2. LISTAR  ✅ YA RESUELTO (úsalo como modelo)
+    # -----------------------------------------------------------------
+    def listar(self):
+        &quot;&quot;&quot;Muestra los pasajeros con su posición.&quot;&quot;&quot;
+        if self.cantidad == 0:
+            print(&quot;(lista vacía)&quot;)
+            return
+        for i in range(self.cantidad):          # solo los cajones ocupados
+            print(f&quot;[{i}] {self.datos[i]}&quot;)
+
+    # -----------------------------------------------------------------
+    # 3. LONGITUD
+    # -----------------------------------------------------------------
+    def longitud(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : retorna cuántos pasajeros hay.
+        CÓMO     : no recorras nada; el dato ya está guardado en un atributo.
+        RETORNA  : int
+        PRUEBA   : con los 5 pasajeros de prueba -&gt; 5
+        &quot;&quot;&quot;
+        return self.cantidad
+
+    # -----------------------------------------------------------------
+    # 4. INSERTAR EN UNA POSICIÓN
+    # -----------------------------------------------------------------
+    def insertar(self, posicion, pasajero):
+        &quot;&quot;&quot;
+        QUÉ HACE : mete el pasajero en &#x27;posicion&#x27; corriendo los demás
+                   un lugar a la DERECHA.
+        PASOS    :
+          1. Si la lista está llena -&gt; mensaje y return False.
+          2. Si posicion &lt; 0 o posicion &gt; cantidad -&gt; &quot;Posición no válida&quot;,
+             return False.  (posicion == cantidad SÍ es válida: es el final)
+          3. i = self.cantidad   (empiezo por el ÚLTIMO cajón libre)
+          4. Mientras i &gt; posicion:
+                 datos[i] = datos[i - 1]     # muevo uno a la derecha
+                 i = i - 1
+          5. datos[posicion] = pasajero      # el nuevo entra en el hueco
+          6. cantidad + 1  y  return True
+        OJO      : si recorres de adelante hacia atrás, PISAS los datos.
+        PRUEBA   : [Diana, Ana, Luis] -&gt; insertar(1, Xavi)
+                   -&gt; [Diana, Xavi, Ana, Luis]
+        &quot;&quot;&quot;
+        if self.cantidad == self.capacidad:
+            print(&quot;⚠ La lista está llena&quot;)
+            return False
+        if posicion &lt; 0 or posicion &gt; self.cantidad:
+            print(&quot;Posición no válida&quot;)
+            return False
+        if self.buscar(pasajero.cedula) != -1:
+            print(&quot;⚠ Ya existe un pasajero con esa cédula&quot;)
+            return False
+        i = self.cantidad
+        while i &gt; posicion:
+            self.datos[i] = self.datos[i - 1]
+            i = i - 1
+        self.datos[posicion] = pasajero
+        self.cantidad = self.cantidad + 1
+        return True
+
+    # -----------------------------------------------------------------
+    # 5. BUSCAR (LINEAL) POR CÉDULA
+    # -----------------------------------------------------------------
+    def buscar(self, cedula):
+        &quot;&quot;&quot;
+        QUÉ HACE : busca un pasajero por cédula revisando uno por uno.
+        PATRÓN   : 🔴 búsqueda lineal (módulo 0).
+        PASOS    :
+          1. Recorre i desde 0 hasta cantidad - 1.
+          2. Si datos[i].cedula == cedula -&gt; return i
+          3. Si terminas el recorrido sin encontrarlo -&gt; return -1
+        RETORNA  : la POSICIÓN (int) o -1 si no existe.
+        PRUEBA   : buscar(&quot;0987654321&quot;) con datos de prueba -&gt; 2
+                   buscar(&quot;1111111111&quot;)                     -&gt; -1
+        &quot;&quot;&quot;
+        for i in range(self.cantidad):
+            if self.datos[i].cedula == cedula:
+                return i
+        return -1
+
+    # -----------------------------------------------------------------
+    # 6. BUSCAR BINARIA POR CÉDULA
+    # -----------------------------------------------------------------
+    def buscar_binaria(self, cedula):
+        &quot;&quot;&quot;
+        QUÉ HACE : busca partiendo la lista por la mitad.
+        ⚠ REQUISITO: la lista DEBE estar ordenada por cédula
+                     (llama antes a ordenar_asc()).
+        PASOS    :
+          1. izq = 0 ; der = cantidad - 1
+          2. Mientras izq &lt;= der:
+                 medio = (izq + der) // 2
+                 si datos[medio].cedula == cedula -&gt; return medio
+                 si datos[medio].cedula &lt;  cedula -&gt; izq = medio + 1
+                 si no                            -&gt; der = medio - 1
+          3. return -1
+        NOTA     : las cédulas son str; &quot;0901...&quot; &lt; &quot;0912...&quot; funciona
+                   porque todas tienen 10 dígitos.
+        PRUEBA   : datos de prueba ORDENADOS -&gt; buscar_binaria(&quot;0923456789&quot;) -&gt; 2
+        &quot;&quot;&quot;
+        izq = 0
+        der = self.cantidad - 1
+        while izq &lt;= der:
+            medio = (izq + der) // 2
+            if self.datos[medio].cedula == cedula:
+                return medio
+            elif self.datos[medio].cedula &lt; cedula:
+                izq = medio + 1
+            else:
+                der = medio - 1
+        return -1
+
+    # -----------------------------------------------------------------
+    # 7. MODIFICAR
+    # -----------------------------------------------------------------
+    def modificar(self, cedula, nuevo_nombre, nueva_edad):
+        &quot;&quot;&quot;
+        QUÉ HACE : cambia nombre y edad del pasajero con esa cédula.
+        PASOS    :
+          1. pos = self.buscar(cedula)          # REUTILIZA buscar
+          2. Si pos == -1 -&gt; mensaje &quot;no existe&quot; y return False
+          3. datos[pos].nombre = nuevo_nombre
+             datos[pos].edad   = nueva_edad
+          4. return True
+        PRUEBA   : modificar(&quot;0934567890&quot;, &quot;Roberto&quot;, 17) -&gt; Beto pasa a Roberto
+        &quot;&quot;&quot;
+        pos = self.buscar(cedula)
+        if pos == -1:
+            print(&quot;El pasajero no existe&quot;)
+            return False
+        if not nuevo_nombre.strip() or nueva_edad &lt; 0:
+            print(&quot;Nombre o edad no válidos&quot;)
+            return False
+        self.datos[pos].nombre = nuevo_nombre
+        self.datos[pos].edad = nueva_edad
+        return True
+
+    # -----------------------------------------------------------------
+    # 8. ELIMINAR POR POSICIÓN
+    # -----------------------------------------------------------------
+    def eliminar_por_posicion(self, posicion):
+        &quot;&quot;&quot;
+        QUÉ HACE : quita el pasajero de esa posición y lo RETORNA.
+        PASOS    :
+          1. Si posicion &lt; 0 o posicion &gt;= cantidad -&gt; mensaje y return None
+          2. valor = datos[posicion]             # guardo el que voy a quitar
+          3. for i in range(posicion, cantidad - 1):
+                 datos[i] = datos[i + 1]         # corro a la IZQUIERDA
+          4. datos[cantidad - 1] = None          # el último cajón queda vacío
+          5. cantidad - 1
+          6. return valor
+        PRUEBA   : datos de prueba -&gt; eliminar_por_posicion(0) retorna a Diana
+                   y la lista queda [Ana, Luis, Beto, Elena]
+        &quot;&quot;&quot;
+        if posicion &lt; 0 or posicion &gt;= self.cantidad:
+            print(&quot;Posición no válida&quot;)
+            return None
+        valor = self.datos[posicion]
+        for i in range(posicion, self.cantidad - 1):
+            self.datos[i] = self.datos[i + 1]
+        self.datos[self.cantidad - 1] = None
+        self.cantidad = self.cantidad - 1
+        return valor
+
+    # -----------------------------------------------------------------
+    # 9. ELIMINAR POR VALOR (por cédula)
+    # -----------------------------------------------------------------
+    def eliminar_por_valor(self, cedula):
+        &quot;&quot;&quot;
+        QUÉ HACE : quita el pasajero que tenga esa cédula.
+        PASOS    : son DOS métodos que ya tienes:
+          1. pos = self.buscar(cedula)
+          2. Si pos == -1 -&gt; mensaje y return False
+          3. self.eliminar_por_posicion(pos)  y  return True
+        IDEA     : no repitas el código de correr a la izquierda; REUTILIZA.
+        PRUEBA   : eliminar_por_valor(&quot;0987654321&quot;) -&gt; Luis desaparece
+        &quot;&quot;&quot;
+        pos = self.buscar(cedula)
+        if pos == -1:
+            print(&quot;El pasajero no existe&quot;)
+            return False
+        self.eliminar_por_posicion(pos)
+        return True
+
+    # -----------------------------------------------------------------
+    # 10. ORDENAR ASCENDENTE (por cédula) — MÉTODO BURBUJA
+    # -----------------------------------------------------------------
+    def ordenar_asc(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : ordena de menor a mayor cédula.
+        PASOS    :
+          n = cantidad
+          for vuelta in range(n - 1):
+              for i in range(n - 1 - vuelta):
+                  si datos[i].cedula &gt; datos[i + 1].cedula:
+                      aux = datos[i]               # intercambio con
+                      datos[i] = datos[i + 1]      # variable auxiliar
+                      datos[i + 1] = aux
+        PRUEBA   : datos de prueba -&gt; Elena, Ana, Diana, Beto, Luis
+        &quot;&quot;&quot;
+        n = self.cantidad
+        for vuelta in range(n - 1):
+            for i in range(n - 1 - vuelta):
+                if self.datos[i].cedula &gt; self.datos[i + 1].cedula:
+                    aux = self.datos[i]
+                    self.datos[i] = self.datos[i + 1]
+                    self.datos[i + 1] = aux
+
+    # -----------------------------------------------------------------
+    # 11. ORDENAR DESCENDENTE (por cédula)
+    # -----------------------------------------------------------------
+    def ordenar_desc(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : ordena de MAYOR a menor cédula.
+        CÓMO     : copia la burbuja de ordenar_asc y cambia UN solo
+                   símbolo de la comparación. ¿Cuál? Descúbrelo en el bosquejo.
+        PRUEBA   : datos de prueba -&gt; Luis, Beto, Diana, Ana, Elena
+        &quot;&quot;&quot;
+        n = self.cantidad
+        for vuelta in range(n - 1):
+            for i in range(n - 1 - vuelta):
+                if self.datos[i].cedula &lt; self.datos[i + 1].cedula:
+                    aux = self.datos[i]
+                    self.datos[i] = self.datos[i + 1]
+                    self.datos[i + 1] = aux
+
+    # -----------------------------------------------------------------
+    # 12. REVERSAR
+    # -----------------------------------------------------------------
+    def reversar(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : invierte el orden (el primero pasa a ser el último).
+        PASOS    : dos punteros que se acercan:
+          izq = 0 ; der = cantidad - 1
+          mientras izq &lt; der:
+              intercambia datos[izq] y datos[der] (con aux)
+              izq + 1 ; der - 1
+        PRUEBA   : [Diana, Ana, Luis, Beto, Elena] -&gt; [Elena, Beto, Luis, Ana, Diana]
+        &quot;&quot;&quot;
+        izq = 0
+        der = self.cantidad - 1
+        while izq &lt; der:
+            aux = self.datos[izq]
+            self.datos[izq] = self.datos[der]
+            self.datos[der] = aux
+            izq = izq + 1
+            der = der - 1
+
+    # -----------------------------------------------------------------
+    # 13. COPIAR
+    # -----------------------------------------------------------------
+    def copiar(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : crea OTRA ListaPasajerosManual con los mismos pasajeros.
+        PASOS    :
+          1. nueva = ListaPasajerosManual(self.capacidad)
+          2. for i in range(self.cantidad): nueva.añadir(self.datos[i])
+          3. return nueva
+        PRUEBA   : copia = lista.copiar(); copia.reversar()
+                   -&gt; la copia cambia de orden, la ORIGINAL NO.
+        &quot;&quot;&quot;
+        nueva = ListaPasajerosManual(self.capacidad)
+        for i in range(self.cantidad):
+            nueva.añadir(self.datos[i])
+        return nueva
+
+    # -----------------------------------------------------------------
+    # 14. FILTRAR MAYORES DE EDAD (versión manual de una &quot;comprensión&quot;)
+    # -----------------------------------------------------------------
+    def filtrar_mayores_de_edad(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : retorna una NUEVA ListaPasajerosManual solo con los
+                   pasajeros de 18 años o más. La original no cambia.
+        PATRÓN   : recorrer + if + añadir a otra lista.
+        PASOS    :
+          1. resultado = ListaPasajerosManual(self.capacidad)
+          2. recorre i en range(cantidad):
+                 si datos[i].es_mayor_de_edad(): resultado.añadir(datos[i])
+          3. return resultado
+        COMPARA  : en la Lista 2 esto será UNA línea con comprensión.
+        PRUEBA   : datos de prueba -&gt; todos menos Beto (16 años)
+        &quot;&quot;&quot;
+        resultado = ListaPasajerosManual(self.capacidad)
+        for i in range(self.cantidad):
+            if self.datos[i].es_mayor_de_edad():
+                resultado.añadir(self.datos[i])
+        return resultado
+
+    # -----------------------------------------------------------------
+    # 15. NOMBRES EN MAYÚSCULAS (versión manual de una &quot;comprensión&quot;)
+    # -----------------------------------------------------------------
+    def nombres_en_mayusculas(self):
+        &quot;&quot;&quot;
+        QUÉ HACE : retorna un arreglo con los NOMBRES en mayúsculas
+                   (transformar). La lista original no cambia.
+        PASOS    :
+          1. resultado = [None] * self.cantidad     # arreglo del tamaño justo
+          2. for i in range(cantidad):
+                 resultado[i] = datos[i].nombre.upper()
+          3. return resultado
+        PRUEBA   : datos de prueba -&gt; [&#x27;DIANA&#x27;, &#x27;ANA&#x27;, &#x27;LUIS&#x27;, &#x27;BETO&#x27;, &#x27;ELENA&#x27;]
+        &quot;&quot;&quot;
+        resultado = [None] * self.cantidad
+        for i in range(self.cantidad):
+            resultado[i] = self.datos[i].nombre.upper()
+        return resultado
+</pre></div>
+<h3>📄 lista_python.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — lista_python.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body"># =====================================================================
+#  lista_python.py  —  LISTA 2: con el list de PYTHON (built-in)
+# ---------------------------------------------------------------------
+#  Mismas operaciones que la Lista 1, pero ahora usamos lo que Python
+#  ya trae: append, insert, pop, remove, sort, reverse, copy, len,
+#  enumerate, next, bisect ... y LIST COMPREHENSIONS.
+#
+#      self.pasajeros -&gt; [Pasajero, Pasajero, ...]   (crece sola)
+#
+#  ✅ OBLIGATORIO usar comprensiones de listas en (mínimo):
+#       buscar · buscar_binaria · eliminar_por_valor (versión 2)
+#       filtrar_mayores_de_edad · nombres_en_mayusculas
+#
+#  Recordatorio de la sintaxis:
+#       [EXPRESIÓN for ELEMENTO in LISTA]            -&gt; transformar
+#       [ELEMENTO  for ELEMENTO in LISTA if COND]    -&gt; filtrar
+#       [EXPRESIÓN for ELEMENTO in LISTA if COND]    -&gt; las dos a la vez
+#
+#  📌 Compara cada método con su gemelo de lista_manual.py:
+#     allá eran 10 líneas, aquí casi siempre son 1 o 2.
+#  Los métodos están completados según los pasos de la guía.
+# =====================================================================
+
+from bisect import bisect_left
+from pasajero import Pasajero
+
+
+class ListaPasajerosPython:
+
+    def __init__(self):
+        self.pasajeros = []               # list de Python: crece sola
+
+    # -----------------------------------------------------------------
+    # 1. AÑADIR  ✅ YA RESUELTO
+    # -----------------------------------------------------------------
+    def añadir(self, pasajero):
+        &quot;&quot;&quot;Añade al final con append().&quot;&quot;&quot;
+        if self.buscar(pasajero.cedula) != -1:
+            print(&quot;⚠ Ya existe un pasajero con esa cédula&quot;)
+            return False
+        self.pasajeros.append(pasajero)
+        return True
+
+    # -----------------------------------------------------------------
+    # 2. LISTAR  ✅ YA RESUELTO
+    # -----------------------------------------------------------------
+    def listar(self):
+        &quot;&quot;&quot;Muestra los pasajeros con su posición usando enumerate().&quot;&quot;&quot;
+        if not self.pasajeros:                  # lista vacía es False
+            print(&quot;(lista vacía)&quot;)
+            return
+        for i, p in enumerate(self.pasajeros):
+            print(f&quot;[{i}] {p}&quot;)
+
+    # -----------------------------------------------------------------
+    # 3. LONGITUD
+    # -----------------------------------------------------------------
+    def longitud(self):
+        &quot;&quot;&quot;
+        USA      : len()
+        RETORNA  : int.   PRUEBA: datos de prueba -&gt; 5
+        &quot;&quot;&quot;
+        # Versión manual: 1 línea de código (sin def, docstring ni comentarios).
+        return len(self.pasajeros)
+
+    # -----------------------------------------------------------------
+    # 4. INSERTAR
+    # -----------------------------------------------------------------
+    def insertar(self, posicion, pasajero):
+        &quot;&quot;&quot;
+        USA      : self.pasajeros.insert(posicion, pasajero)
+        VALIDA   : 0 &lt;= posicion &lt;= len(self.pasajeros); si no, mensaje y False.
+        PIENSA   : ¿por qué ya no tienes que correr nada a la derecha?
+                   (Python lo hace por ti... pero lo sigue haciendo: O(n)).
+        &quot;&quot;&quot;
+        # Versión manual: 16 líneas de código (sin def, docstring ni comentarios).
+        if posicion &lt; 0 or posicion &gt; len(self.pasajeros):
+            print(&quot;Posición no válida&quot;)
+            return False
+        if self.buscar(pasajero.cedula) != -1:
+            print(&quot;⚠ Ya existe un pasajero con esa cédula&quot;)
+            return False
+        # Python desplaza los elementos a la derecha para abrir el espacio.
+        # Insertar al principio cuesta O(n), aunque se escriba en una línea.
+        self.pasajeros.insert(posicion, pasajero)
+        return True
+
+    # -----------------------------------------------------------------
+    # 5. BUSCAR POR CÉDULA  (con COMPRENSIÓN)
+    # -----------------------------------------------------------------
+    def buscar(self, cedula):
+        &quot;&quot;&quot;
+        RETORNA  : la posición (int) o -1.
+        USA      : una comprensión con enumerate que junte las posiciones
+                   que coinciden:
+                       posiciones = [i for i, p in enumerate(self.pasajeros)
+                                     if p.cedula == cedula]
+                   Si la lista &#x27;posiciones&#x27; está vacía -&gt; -1,
+                   si no -&gt; posiciones[0].
+        EXTRA    : investiga la versión con next(...):
+                   next((i for i, p in enumerate(...) if ...), -1)
+        PRUEBA   : buscar(&quot;0987654321&quot;) -&gt; 2 ;  buscar(&quot;1111111111&quot;) -&gt; -1
+        &quot;&quot;&quot;
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
+        posiciones = [i for i, p in enumerate(self.pasajeros) if p.cedula == cedula]
+        if not posiciones:
+            return -1
+        return posiciones[0]
+
+    # -----------------------------------------------------------------
+    # 6. BUSCAR BINARIA  (con COMPRENSIÓN + bisect)
+    # -----------------------------------------------------------------
+    def buscar_binaria(self, cedula):
+        &quot;&quot;&quot;
+        ⚠ REQUISITO: lista ordenada por cédula (ordenar_asc antes).
+        PASOS    :
+          1. cedulas = [p.cedula for p in self.pasajeros]   # COMPRENSIÓN
+          2. i = bisect_left(cedulas, cedula)   # dónde &quot;debería&quot; estar
+          3. Si i &lt; len(cedulas) y cedulas[i] == cedula -&gt; return i
+          4. return -1
+        PRUEBA   : datos ordenados -&gt; buscar_binaria(&quot;0923456789&quot;) -&gt; 2
+        &quot;&quot;&quot;
+        # Versión manual: 11 líneas de código (sin def, docstring ni comentarios).
+        cedulas = [p.cedula for p in self.pasajeros]
+        i = bisect_left(cedulas, cedula)
+        if i &lt; len(cedulas) and cedulas[i] == cedula:
+            return i
+        return -1
+
+    # -----------------------------------------------------------------
+    # 7. MODIFICAR
+    # -----------------------------------------------------------------
+    def modificar(self, cedula, nuevo_nombre, nueva_edad):
+        &quot;&quot;&quot;
+        PASOS    : pos = self.buscar(cedula); si -1 -&gt; False;
+                   si no, cambia self.pasajeros[pos].nombre y .edad -&gt; True
+        &quot;&quot;&quot;
+        # Versión manual: 10 líneas de código (sin def, docstring ni comentarios).
+        pos = self.buscar(cedula)
+        if pos == -1:
+            print(&quot;El pasajero no existe&quot;)
+            return False
+        if not nuevo_nombre.strip() or nueva_edad &lt; 0:
+            print(&quot;Nombre o edad no válidos&quot;)
+            return False
+        self.pasajeros[pos].nombre = nuevo_nombre
+        self.pasajeros[pos].edad = nueva_edad
+        return True
+
+    # -----------------------------------------------------------------
+    # 8. ELIMINAR POR POSICIÓN
+    # -----------------------------------------------------------------
+    def eliminar_por_posicion(self, posicion):
+        &quot;&quot;&quot;
+        USA      : self.pasajeros.pop(posicion)   (retorna el eliminado)
+        VALIDA   : 0 &lt;= posicion &lt; len(...); si no -&gt; mensaje y None
+        &quot;&quot;&quot;
+        # Versión manual: 9 líneas de código (sin def, docstring ni comentarios).
+        if posicion &lt; 0 or posicion &gt;= len(self.pasajeros):
+            print(&quot;Posición no válida&quot;)
+            return None
+        return self.pasajeros.pop(posicion)
+
+    # -----------------------------------------------------------------
+    # 9. ELIMINAR POR VALOR (por cédula)  — hazlo de DOS formas
+    # -----------------------------------------------------------------
+    def eliminar_por_valor(self, cedula):
+        &quot;&quot;&quot;
+        FORMA 1 (remove):
+            pos = self.buscar(cedula) ... self.pasajeros.remove(self.pasajeros[pos])
+        FORMA 2 (COMPRENSIÓN) — la que debe quedar activa:
+            antes = len(self.pasajeros)
+            self.pasajeros = [p for p in self.pasajeros if p.cedula != cedula]
+            return len(self.pasajeros) &lt; antes      # True si eliminó algo
+        Deja la FORMA 1 comentada para comparar.
+        &quot;&quot;&quot;
+        # Versión manual: 6 líneas de código (sin def, docstring ni comentarios).
+        # FORMA 1 (remove), comentada para comparar:
+        # pos = self.buscar(cedula)
+        # if pos == -1:
+        #     print(&quot;El pasajero no existe&quot;)
+        #     return False
+        # self.pasajeros.remove(self.pasajeros[pos])
+        # return True
+
+        antes = len(self.pasajeros)
+        self.pasajeros = [p for p in self.pasajeros if p.cedula != cedula]
+        if len(self.pasajeros) == antes:
+            print(&quot;El pasajero no existe&quot;)
+        return len(self.pasajeros) &lt; antes
+
+    # -----------------------------------------------------------------
+    # 10. ORDENAR ASCENDENTE (por cédula)
+    # -----------------------------------------------------------------
+    def ordenar_asc(self):
+        &quot;&quot;&quot;
+        USA      : self.pasajeros.sort(key=lambda p: p.cedula)
+        PIENSA   : ¿qué hace key=? ¿qué pasaría sin él? (pruébalo)
+        &quot;&quot;&quot;
+        # Versión manual: 7 líneas de código (sin def, docstring ni comentarios).
+        # key extrae la cédula: sort compara los textos de las cédulas.
+        # Sin key se produce TypeError, porque Pasajero no define la comparación &lt;.
+        self.pasajeros.sort(key=lambda p: p.cedula)
+
+    # -----------------------------------------------------------------
+    # 11. ORDENAR DESCENDENTE (por cédula)
+    # -----------------------------------------------------------------
+    def ordenar_desc(self):
+        &quot;&quot;&quot; USA : sort(key=..., reverse=True) &quot;&quot;&quot;
+        # Versión manual: 7 líneas de código (sin def, docstring ni comentarios).
+        self.pasajeros.sort(key=lambda p: p.cedula, reverse=True)
+
+    # -----------------------------------------------------------------
+    # 12. REVERSAR
+    # -----------------------------------------------------------------
+    def reversar(self):
+        &quot;&quot;&quot; USA : self.pasajeros.reverse()   (no es lo mismo que ordenar_desc) &quot;&quot;&quot;
+        # Versión manual: 8 líneas de código (sin def, docstring ni comentarios).
+        self.pasajeros.reverse()
+
+    # -----------------------------------------------------------------
+    # 13. COPIAR
+    # -----------------------------------------------------------------
+    def copiar(self):
+        &quot;&quot;&quot;
+        PASOS    :
+          nueva = ListaPasajerosPython()
+          nueva.pasajeros = self.pasajeros.copy()    # o self.pasajeros[:]
+          return nueva
+        ⚠ OJO    : es una copia SUPERFICIAL: las dos listas son distintas,
+                   pero los objetos Pasajero de adentro son los MISMOS.
+                   Reversar la copia no afecta al original;
+                   modificar un pasajero de la copia... ¡sí! Pruébalo.
+        &quot;&quot;&quot;
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
+        nueva = ListaPasajerosPython()
+        # Es una copia superficial: otra lista con los mismos objetos Pasajero.
+        # Reversar la copia cambia su orden y deja intacto el orden del original.
+        # Modificar un pasajero de la copia también cambia lo visto en el original,
+        # porque ambas listas contienen una referencia al mismo pasajero.
+        nueva.pasajeros = self.pasajeros.copy()
+        return nueva
+
+    # -----------------------------------------------------------------
+    # 14. FILTRAR MAYORES DE EDAD  (COMPRENSIÓN que FILTRA)
+    # -----------------------------------------------------------------
+    def filtrar_mayores_de_edad(self):
+        &quot;&quot;&quot;
+        RETORNA  : una NUEVA ListaPasajerosPython.
+        PASOS    :
+          nueva = ListaPasajerosPython()
+          nueva.pasajeros = [p for p in self.pasajeros if p.es_mayor_de_edad()]
+          return nueva
+        PRUEBA   : datos de prueba -&gt; todos menos Beto
+        &quot;&quot;&quot;
+        # Versión manual: 5 líneas de código (sin def, docstring ni comentarios).
+        nueva = ListaPasajerosPython()
+        nueva.pasajeros = [p for p in self.pasajeros if p.es_mayor_de_edad()]
+        return nueva
+
+    # -----------------------------------------------------------------
+    # 15. NOMBRES EN MAYÚSCULAS  (COMPRENSIÓN que TRANSFORMA)
+    # -----------------------------------------------------------------
+    def nombres_en_mayusculas(self):
+        &quot;&quot;&quot;
+        RETORNA  : list de str -&gt;  [p.nombre.upper() for p in self.pasajeros]
+        PRUEBA   : [&#x27;DIANA&#x27;, &#x27;ANA&#x27;, &#x27;LUIS&#x27;, &#x27;BETO&#x27;, &#x27;ELENA&#x27;]
+        &quot;&quot;&quot;
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
+        return [p.nombre.upper() for p in self.pasajeros]
+</pre></div>
+<h3>📄 ejercicio1.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio1.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_t1():
+    &quot;&quot;&quot;
+    T1 — CRUD de pasajeros con clase Pasajero + list   (Taller, Medio)
+    -----------------------------------------------------------------
+    Demuestra (sin menú, con llamadas directas) el CRUD completo usando
+    tu clase ListaPasajerosPython:
+        añadir 3 pasajeros -&gt; listar -&gt; buscar por cédula -&gt; modificar
+        -&gt; eliminar -&gt; listar otra vez -&gt; ordenar por NOMBRE con
+        sort(key=lambda p: p.nombre)  (es el reto del taller).
+    Importa así:  from lista_python import ListaPasajerosPython
+                  from pasajero import Pasajero
+    &quot;&quot;&quot;
+    print(&#x27;T1 — CRUD de pasajeros con clase Pasajero + list&#x27;)
+    from lista_python import ListaPasajerosPython
+    from pasajero import Pasajero
+
+    lista = ListaPasajerosPython()
+    lista.añadir(Pasajero(&quot;Diana&quot;, &quot;0923456789&quot;, 22))
+    lista.añadir(Pasajero(&quot;Ana&quot;, &quot;0912345678&quot;, 28))
+    lista.añadir(Pasajero(&quot;Luis&quot;, &quot;0987654321&quot;, 35))
+    print(&quot;--- Pasajeros añadidos ---&quot;)
+    lista.listar()
+
+    pos = lista.buscar(&quot;0912345678&quot;)
+    if pos == -1:
+        print(&quot;No existe&quot;)
+    else:
+        print(f&quot;Encontrado en [{pos}]: {lista.pasajeros[pos]}&quot;)
+
+    if lista.modificar(&quot;0987654321&quot;, &quot;Carlos&quot;, 36):
+        print(&quot;✓ Pasajero modificado&quot;)
+    if lista.eliminar_por_valor(&quot;0912345678&quot;):
+        print(&quot;✓ Pasajero eliminado&quot;)
+    print(&quot;--- Después de modificar y eliminar ---&quot;)
+    lista.listar()
+
+    lista.pasajeros.sort(key=lambda p: p.nombre)
+    print(&quot;--- Ordenados por nombre ---&quot;)
+    lista.listar()
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_t1()
+</pre></div>
+<h3>📄 ejercicio2.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio2.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_t2():
+    &quot;&quot;&quot;
+    T2 — Estadísticas de una lista de notas   (Taller, Medio)
+    -----------------------------------------------------------------
+    Datos:  nombres = [&quot;Ana&quot;, &quot;Luis&quot;, &quot;Diana&quot;, &quot;Beto&quot;, &quot;Elena&quot;]
+            notas   = [ 8,     6,      10,      7,      5  ]
+    Muestra: promedio, máxima, mínima, cantidad de aprobados (&gt;= 7)
+             y el nombre del mejor estudiante.
+    ✋ MANUAL : un solo for con acumulador, campeón y contador.
+    🐍 PYTHON : sum, max, min, len, notas.index(max(notas)) y
+               aprobados con COMPRENSIÓN: [n for n in notas if n &gt;= 7]
+    Salida esperada: Promedio 7.20 · Máx 10 (Diana) · Mín 5 · Aprobados 3 de 5
+    &quot;&quot;&quot;
+    print(&#x27;T2 — Estadísticas de una lista de notas&#x27;)
+    nombres = [&quot;Ana&quot;, &quot;Luis&quot;, &quot;Diana&quot;, &quot;Beto&quot;, &quot;Elena&quot;]
+    notas = [8, 6, 10, 7, 5]
+
+    total = 0
+    maxima = notas[0]
+    minima = notas[0]
+    mejor = nombres[0]
+    aprobados = 0
+    cantidad = 0
+    for i in range(len(notas)):
+        nota = notas[i]
+        total = total + nota
+        cantidad = cantidad + 1
+        if nota &gt; maxima:
+            maxima = nota
+            mejor = nombres[i]
+        if nota &lt; minima:
+            minima = nota
+        if nota &gt;= 7:
+            aprobados = aprobados + 1
+    promedio = total / cantidad
+    print(f&quot;MANUAL: Promedio {promedio:.2f} · Máx {maxima} ({mejor}) · Mín {minima} · Aprobados {aprobados} de {cantidad}&quot;)
+
+    promedio = sum(notas) / len(notas)
+    maxima = max(notas)
+    minima = min(notas)
+    mejor = nombres[notas.index(max(notas))]
+    aprobados = [n for n in notas if n &gt;= 7]
+    print(f&quot;PYTHON: Promedio {promedio:.2f} · Máx {maxima} ({mejor}) · Mín {minima} · Aprobados {len(aprobados)} de {len(notas)}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_t2()
+</pre></div>
+<h3>📄 ejercicio3.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio3.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_t3():
+    &quot;&quot;&quot;
+    T3 — Ordenar una lista (bubble sort)   (Taller, Avanzado)
+    -----------------------------------------------------------------
+    Datos: [5, 2, 8, 1, 9, 3, 7]
+    ✋ MANUAL : burbuja con bandera hubo_swap (sobre una COPIA lista[:]).
+    🐍 PYTHON : sorted(lista) y lista.sort(reverse=True).
+    Extra    : palabras = [&quot;python&quot;, &quot;a&quot;, &quot;código&quot;, &quot;el&quot;] ordenadas con key=len
+    Salida esperada: [1, 2, 3, 5, 7, 8, 9]
+    &quot;&quot;&quot;
+    print(&#x27;T3 — Ordenar una lista (bubble sort)&#x27;)
+    lista = [5, 2, 8, 1, 9, 3, 7]
+    copia = lista[:]
+    for vuelta in range(len(copia) - 1):
+        hubo_swap = False
+        for i in range(len(copia) - 1 - vuelta):
+            if copia[i] &gt; copia[i + 1]:
+                aux = copia[i]
+                copia[i] = copia[i + 1]
+                copia[i + 1] = aux
+                hubo_swap = True
+        if not hubo_swap:
+            break
+    print(&quot;MANUAL:&quot;, copia)
+    print(&quot;Original:&quot;, lista)
+    print(&quot;PYTHON ascendente:&quot;, sorted(lista))
+    lista.sort(reverse=True)
+    print(&quot;PYTHON descendente:&quot;, lista)
+
+    palabras = [&quot;python&quot;, &quot;a&quot;, &quot;código&quot;, &quot;el&quot;]
+    palabras.sort(key=len)
+    print(&quot;Palabras por longitud:&quot;, palabras)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_t3()
+</pre></div>
+<h3>📄 ejercicio4.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio4.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_p1():
+    &quot;&quot;&quot;
+    P1 — Contar apariciones de un valor
+    Datos: lista = [1, 3, 2, 3, 4, 3, 5],  v = 3
+    ✋ MANUAL : patrón contador.   🐍 PYTHON : lista.count(v)
+    🧩 COMPRENSIÓN: len([x for x in lista if x == v])
+    Salida esperada: 3 aparece 3 veces
+    &quot;&quot;&quot;
+    print(&#x27;P1 — Contar apariciones de un valor&#x27;)
+    lista = [1, 3, 2, 3, 4, 3, 5]
+    v = 3
+    contador = 0
+    for x in lista:
+        if x == v:
+            contador = contador + 1
+    print(f&quot;MANUAL: {v} aparece {contador} veces&quot;)
+    print(f&quot;PYTHON: {v} aparece {lista.count(v)} veces&quot;)
+    contador = len([x for x in lista if x == v])
+    print(f&quot;COMPRENSIÓN: {v} aparece {contador} veces&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_p1()
+</pre></div>
+<h3>📄 ejercicio5.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio5.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_p2():
+    &quot;&quot;&quot;
+    P2 — Invertir una lista SIN lista.reverse()
+    Datos: [1, 2, 3, 4, 5]
+    ✋ MANUAL : for con range(len(lista)-1, -1, -1) y append.
+    🐍 PYTHON : lista[::-1]  y  list(reversed(lista))
+    🧩 COMPRENSIÓN: [lista[i] for i in range(len(lista)-1, -1, -1)]
+    Salida esperada: [5, 4, 3, 2, 1]
+    &quot;&quot;&quot;
+    print(&#x27;P2 — Invertir una lista SIN lista.reverse()&#x27;)
+    lista = [1, 2, 3, 4, 5]
+    invertida = []
+    for i in range(len(lista) - 1, -1, -1):
+        invertida.append(lista[i])
+    print(&quot;MANUAL:&quot;, invertida)
+    print(&quot;PYTHON slicing:&quot;, lista[::-1])
+    print(&quot;PYTHON reversed:&quot;, list(reversed(lista)))
+    invertida = [lista[i] for i in range(len(lista) - 1, -1, -1)]
+    print(&quot;COMPRENSIÓN:&quot;, invertida)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_p2()
+</pre></div>
+<h3>📄 ejercicio6.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio6.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_p3():
+    &quot;&quot;&quot;
+    P3 — Números únicos manteniendo el orden
+    Datos: [1, 3, 2, 3, 4, 1, 5, 2]
+    ✋ MANUAL : recorrer y añadir si &quot;not in unicos&quot;.
+    🐍 PYTHON : list(dict.fromkeys(nums))   (y explica por qué list(set(nums))
+               NO garantiza el orden)
+    Salida esperada: [1, 3, 2, 4, 5]
+    &quot;&quot;&quot;
+    print(&#x27;P3 — Números únicos manteniendo el orden&#x27;)
+    nums = [1, 3, 2, 3, 4, 1, 5, 2]
+    unicos = []
+    for numero in nums:
+        if numero not in unicos:
+            unicos.append(numero)
+    print(&quot;MANUAL:&quot;, unicos)
+    print(&quot;PYTHON:&quot;, list(dict.fromkeys(nums)))
+    print(&quot;dict.fromkeys conserva el orden de la primera aparición.&quot;)
+    print(&quot;list(set(nums)) no garantiza ese orden porque un conjunto no conserva el orden de inserción.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_p3()
+</pre></div>
+<h3>📄 ejercicio7.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio7.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_p4():
+    &quot;&quot;&quot;
+    P4 — Segundo mayor (sin ordenar toda la lista)
+    Datos: [5, 2, 9, 7, 9, 3, 8]
+    ✋ MANUAL : dos campeones (mayor y segundo) en un solo recorrido.
+    🐍 PYTHON (para comprobar): sorted(set(nums))[-2]
+    Salida esperada: Mayor 9 · Segundo 8
+    &quot;&quot;&quot;
+    print(&#x27;P4 — Segundo mayor (sin ordenar toda la lista)&#x27;)
+    nums = [5, 2, 9, 7, 9, 3, 8]
+    mayor = None
+    segundo = None
+    for numero in nums:
+        if mayor is None or numero &gt; mayor:
+            segundo = mayor
+            mayor = numero
+        elif numero != mayor and (segundo is None or numero &gt; segundo):
+            segundo = numero
+    if segundo is None:
+        print(&quot;No hay dos valores distintos&quot;)
+    else:
+        print(f&quot;MANUAL: Mayor {mayor} · Segundo {segundo}&quot;)
+    print(f&quot;PYTHON: Mayor {max(nums)} · Segundo {sorted(set(nums))[-2]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_p4()
+</pre></div>
+<h3>📄 ejercicio8.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — ejercicio8.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body">def ejercicio_p5():
+    &quot;&quot;&quot;
+    P5 — Fusionar dos listas ordenadas (sin sort)
+    Datos: a = [1, 3, 5, 7],  b = [2, 4, 6, 8, 10]
+    ✋ MANUAL : dos índices i, j comparando cabezas (base del merge sort)
+               y al final extend con lo que sobre.
+    🐍 PYTHON (para comprobar): sorted(a + b)
+    Salida esperada: [1, 2, 3, 4, 5, 6, 7, 8, 10]
+    &quot;&quot;&quot;
+    print(&#x27;P5 — Fusionar dos listas ordenadas (sin sort)&#x27;)
+    a = [1, 3, 5, 7]
+    b = [2, 4, 6, 8, 10]
+    fusion = []
+    i = 0
+    j = 0
+    while i &lt; len(a) and j &lt; len(b):
+        if a[i] &lt;= b[j]:
+            fusion.append(a[i])
+            i = i + 1
+        else:
+            fusion.append(b[j])
+            j = j + 1
+    fusion.extend(a[i:])
+    fusion.extend(b[j:])
+    print(&quot;MANUAL:&quot;, fusion)
+    print(&quot;PYTHON:&quot;, sorted(a + b))
+
+
+if __name__ == &quot;__main__&quot;:
+    ejercicio_p5()
+</pre></div>
+<h3>📄 main.py</h3><div class="code-wrap"><div class="code-header"><span class="code-lang">Python — main.py</span><button class="btn-copy" onclick="copyCode(this)">Copiar</button></div><pre class="code-body"># =====================================================================
+#  main.py  —  PROGRAMA PRINCIPAL (menú de opciones)
+# ---------------------------------------------------------------------
+#  Ejecutar desde la carpeta del proyecto:     python main.py
+#
+#  MENÚ PRINCIPAL
+#     1. Lista 1  (construida desde cero)   -&gt; lista_manual.py
+#     2. Lista 2  (list de Python)          -&gt; lista_python.py
+#     3. Salir
+#
+#  ESTADO: ambas listas y sus opciones están completas.
+# =====================================================================
+
+from pasajero import Pasajero
+from lista_manual import ListaPasajerosManual
+from lista_python import ListaPasajerosPython
+
+# Las dos listas viven durante todo el programa
+lista1 = ListaPasajerosManual(capacidad=10)
+lista2 = ListaPasajerosPython()
+
+
+# =========================== FUNCIONES DE APOYO ======================
+#  ✅ Ya están hechas. Úsalas en las dos listas.
+
+def leer_entero(mensaje):
+    &quot;&quot;&quot;Pide un número entero y repite hasta que sea válido.&quot;&quot;&quot;
+    while True:
+        try:
+            return int(input(mensaje))
+        except ValueError:
+            print(&quot;  Debe ser un número entero.&quot;)
+
+
+def leer_pasajero():
+    &quot;&quot;&quot;Pide los datos por teclado y retorna un objeto Pasajero.&quot;&quot;&quot;
+    nombre = input(&quot;  Nombre: &quot;).strip()
+    while not nombre:
+        print(&quot;  El nombre no puede estar vacío.&quot;)
+        nombre = input(&quot;  Nombre: &quot;).strip()
+    cedula = input(&quot;  Cédula (10 dígitos): &quot;).strip()
+    while len(cedula) != 10 or not cedula.isascii() or not cedula.isdigit():
+        print(&quot;  La cédula debe tener 10 dígitos.&quot;)
+        cedula = input(&quot;  Cédula (10 dígitos): &quot;).strip()
+    edad = leer_entero(&quot;  Edad: &quot;)
+    while edad &lt; 0:
+        print(&quot;  La edad no puede ser negativa.&quot;)
+        edad = leer_entero(&quot;  Edad: &quot;)
+    return Pasajero(nombre, cedula, edad)
+
+
+def cargar_datos_prueba(lista):
+    &quot;&quot;&quot;Carga 5 pasajeros de prueba. Funciona con LAS DOS listas
+    porque ambas tienen el método añadir().&quot;&quot;&quot;
+    antes = lista.longitud()
+    lista.añadir(Pasajero(&quot;Diana&quot;, &quot;0923456789&quot;, 22))
+    lista.añadir(Pasajero(&quot;Ana&quot;,   &quot;0912345678&quot;, 28))
+    lista.añadir(Pasajero(&quot;Luis&quot;,  &quot;0987654321&quot;, 35))
+    lista.añadir(Pasajero(&quot;Beto&quot;,  &quot;0934567890&quot;, 16))
+    lista.añadir(Pasajero(&quot;Elena&quot;, &quot;0901234567&quot;, 41))
+    print(f&quot;  ✓ {lista.longitud() - antes} pasajeros de prueba cargados&quot;)
+
+
+def mostrar_menu_lista(titulo):
+    &quot;&quot;&quot;Mismo menú para las dos listas (mismas opciones).&quot;&quot;&quot;
+    print(f&quot;\n========== {titulo} ==========&quot;)
+    print(&quot; 1. Añadir pasajero (al final)&quot;)
+    print(&quot; 2. Listar pasajeros&quot;)
+    print(&quot; 3. Insertar en una posición&quot;)
+    print(&quot; 4. Buscar por cédula (lineal)&quot;)
+    print(&quot; 5. Buscar por cédula (binaria)&quot;)
+    print(&quot; 6. Modificar pasajero&quot;)
+    print(&quot; 7. Eliminar por posición&quot;)
+    print(&quot; 8. Eliminar por cédula (valor)&quot;)
+    print(&quot; 9. Ordenar ascendente (por cédula)&quot;)
+    print(&quot;10. Ordenar descendente (por cédula)&quot;)
+    print(&quot;11. Reversar&quot;)
+    print(&quot;12. Copiar lista&quot;)
+    print(&quot;13. Longitud&quot;)
+    print(&quot;14. Filtrar mayores de edad&quot;)
+    print(&quot;15. Nombres en mayúsculas&quot;)
+    print(&quot; C. Cargar datos de prueba&quot;)
+    print(&quot; 0. Volver&quot;)
+
+
+# ============================ SUBMENÚ LISTA 1 ========================
+
+def menu_lista1():
+    while True:
+        mostrar_menu_lista(&quot;LISTA 1 · desde cero&quot;)
+        op = input(&quot;Opción: &quot;).strip().upper()
+
+        if op == &quot;1&quot;:
+            pasajero = leer_pasajero()
+            if lista1.añadir(pasajero):
+                print(&quot;  ✓ Pasajero añadido&quot;)
+
+        elif op == &quot;2&quot;:
+            lista1.listar()
+
+        elif op == &quot;C&quot;:
+            cargar_datos_prueba(lista1)
+
+        elif op == &quot;3&quot;:
+            posicion = leer_entero(&quot;  Posición: &quot;)
+            pasajero = leer_pasajero()
+            if lista1.insertar(posicion, pasajero):
+                print(&quot;  ✓ Insertado&quot;)
+
+        elif op == &quot;4&quot;:
+            cedula = input(&quot;  Cédula a buscar: &quot;).strip()
+            pos = lista1.buscar(cedula)
+            if pos == -1:
+                print(&quot;  No existe&quot;)
+            else:
+                print(f&quot;  Encontrado en [{pos}]: {lista1.datos[pos]}&quot;)
+
+        elif op == &quot;5&quot;:
+            ordenada = True
+            for i in range(lista1.longitud() - 1):
+                if lista1.datos[i].cedula &gt; lista1.datos[i + 1].cedula:
+                    ordenada = False
+                    break
+            if not ordenada:
+                print(&quot;  Recuerda ordenar primero (opción 9)&quot;)
+            else:
+                cedula = input(&quot;  Cédula a buscar: &quot;).strip()
+                pos = lista1.buscar_binaria(cedula)
+                if pos == -1:
+                    print(&quot;  No existe&quot;)
+                else:
+                    print(f&quot;  Encontrado en [{pos}]: {lista1.datos[pos]}&quot;)
+
+        elif op == &quot;6&quot;:
+            cedula = input(&quot;  Cédula a modificar: &quot;).strip()
+            nuevo_nombre = input(&quot;  Nuevo nombre: &quot;).strip()
+            while not nuevo_nombre:
+                print(&quot;  El nombre no puede estar vacío.&quot;)
+                nuevo_nombre = input(&quot;  Nuevo nombre: &quot;).strip()
+            nueva_edad = leer_entero(&quot;  Nueva edad: &quot;)
+            while nueva_edad &lt; 0:
+                print(&quot;  La edad no puede ser negativa.&quot;)
+                nueva_edad = leer_entero(&quot;  Nueva edad: &quot;)
+            if lista1.modificar(cedula, nuevo_nombre, nueva_edad):
+                print(&quot;  ✓ Modificado&quot;)
+
+        elif op == &quot;7&quot;:
+            posicion = leer_entero(&quot;  Posición a eliminar: &quot;)
+            quitado = lista1.eliminar_por_posicion(posicion)
+            if quitado is not None:
+                print(f&quot;  ✓ Eliminado: {quitado}&quot;)
+
+        elif op == &quot;8&quot;:
+            cedula = input(&quot;  Cédula a eliminar: &quot;).strip()
+            if lista1.eliminar_por_valor(cedula):
+                print(&quot;  ✓ Eliminado&quot;)
+
+        elif op == &quot;9&quot;:
+            lista1.ordenar_asc()
+            lista1.listar()
+
+        elif op == &quot;10&quot;:
+            lista1.ordenar_desc()
+            lista1.listar()
+
+        elif op == &quot;11&quot;:
+            lista1.reversar()
+            lista1.listar()
+
+        elif op == &quot;12&quot;:
+            copia = lista1.copiar()
+            copia.reversar()
+            print(&quot;--- COPIA (reversada) ---&quot;)
+            copia.listar()
+            print(&quot;--- ORIGINAL ---&quot;)
+            lista1.listar()
+
+        elif op == &quot;13&quot;:
+            print(f&quot;Hay {lista1.longitud()} pasajeros&quot;)
+
+        elif op == &quot;14&quot;:
+            mayores = lista1.filtrar_mayores_de_edad()
+            mayores.listar()
+
+        elif op == &quot;15&quot;:
+            nombres = lista1.nombres_en_mayusculas()
+            print(nombres)
+
+        elif op == &quot;0&quot;:
+            break
+
+        else:
+            print(&quot;  Opción no válida&quot;)
+
+
+# ============================ SUBMENÚ LISTA 2 ========================
+
+def menu_lista2():
+    while True:
+        mostrar_menu_lista(&quot;LISTA 2 · list de Python&quot;)
+        op = input(&quot;Opción: &quot;).strip().upper()
+
+        if op == &quot;1&quot;:
+            pasajero = leer_pasajero()
+            if lista2.añadir(pasajero):
+                print(&quot;  ✓ Pasajero añadido&quot;)
+
+        elif op == &quot;2&quot;:
+            lista2.listar()
+
+        elif op == &quot;C&quot;:
+            cargar_datos_prueba(lista2)
+
+        elif op == &quot;3&quot;:
+            posicion = leer_entero(&quot;  Posición: &quot;)
+            pasajero = leer_pasajero()
+            if lista2.insertar(posicion, pasajero):
+                print(&quot;  ✓ Insertado&quot;)
+
+        elif op == &quot;4&quot;:
+            cedula = input(&quot;  Cédula a buscar: &quot;).strip()
+            pos = lista2.buscar(cedula)
+            if pos == -1:
+                print(&quot;  No existe&quot;)
+            else:
+                print(f&quot;  Encontrado en [{pos}]: {lista2.pasajeros[pos]}&quot;)
+
+        elif op == &quot;5&quot;:
+            ordenada = True
+            for i in range(lista2.longitud() - 1):
+                if lista2.pasajeros[i].cedula &gt; lista2.pasajeros[i + 1].cedula:
+                    ordenada = False
+                    break
+            if not ordenada:
+                print(&quot;  Recuerda ordenar primero (opción 9)&quot;)
+            else:
+                cedula = input(&quot;  Cédula a buscar: &quot;).strip()
+                pos = lista2.buscar_binaria(cedula)
+                if pos == -1:
+                    print(&quot;  No existe&quot;)
+                else:
+                    print(f&quot;  Encontrado en [{pos}]: {lista2.pasajeros[pos]}&quot;)
+
+        elif op == &quot;6&quot;:
+            cedula = input(&quot;  Cédula a modificar: &quot;).strip()
+            nuevo_nombre = input(&quot;  Nuevo nombre: &quot;).strip()
+            while not nuevo_nombre:
+                print(&quot;  El nombre no puede estar vacío.&quot;)
+                nuevo_nombre = input(&quot;  Nuevo nombre: &quot;).strip()
+            nueva_edad = leer_entero(&quot;  Nueva edad: &quot;)
+            while nueva_edad &lt; 0:
+                print(&quot;  La edad no puede ser negativa.&quot;)
+                nueva_edad = leer_entero(&quot;  Nueva edad: &quot;)
+            if lista2.modificar(cedula, nuevo_nombre, nueva_edad):
+                print(&quot;  ✓ Modificado&quot;)
+
+        elif op == &quot;7&quot;:
+            posicion = leer_entero(&quot;  Posición a eliminar: &quot;)
+            quitado = lista2.eliminar_por_posicion(posicion)
+            if quitado is not None:
+                print(f&quot;  ✓ Eliminado: {quitado}&quot;)
+
+        elif op == &quot;8&quot;:
+            cedula = input(&quot;  Cédula a eliminar: &quot;).strip()
+            if lista2.eliminar_por_valor(cedula):
+                print(&quot;  ✓ Eliminado&quot;)
+
+        elif op == &quot;9&quot;:
+            lista2.ordenar_asc()
+            lista2.listar()
+
+        elif op == &quot;10&quot;:
+            lista2.ordenar_desc()
+            lista2.listar()
+
+        elif op == &quot;11&quot;:
+            lista2.reversar()
+            lista2.listar()
+
+        elif op == &quot;12&quot;:
+            copia = lista2.copiar()
+            copia.reversar()
+            print(&quot;--- COPIA (reversada) ---&quot;)
+            copia.listar()
+            print(&quot;--- ORIGINAL ---&quot;)
+            lista2.listar()
+
+        elif op == &quot;13&quot;:
+            print(f&quot;Hay {lista2.longitud()} pasajeros&quot;)
+
+        elif op == &quot;14&quot;:
+            mayores = lista2.filtrar_mayores_de_edad()
+            mayores.listar()
+
+        elif op == &quot;15&quot;:
+            nombres = lista2.nombres_en_mayusculas()
+            print(nombres)
+
+        elif op == &quot;0&quot;:
+            break
+
+        else:
+            print(&quot;  Opción no válida&quot;)
+
+
+# ============================ MENÚ PRINCIPAL =========================
+
+def main():
+    while True:
+        print(&quot;\n╔══════════════════════════════════╗&quot;)
+        print(&quot;║   TAREA LISTAS · PASAJEROS ✈     ║&quot;)
+        print(&quot;╚══════════════════════════════════╝&quot;)
+        print(&quot;1. Lista 1 (construida desde cero)&quot;)
+        print(&quot;2. Lista 2 (list de Python)&quot;)
+        print(&quot;3. Salir&quot;)
+        op = input(&quot;Opción: &quot;).strip()
+
+        if op == &quot;1&quot;:
+            menu_lista1()
+        elif op == &quot;2&quot;:
+            menu_lista2()
+        elif op == &quot;3&quot;:
+            print(&quot;¡Hasta pronto!&quot;)
+            break
+        else:
+            print(&quot;Opción no válida&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()</pre></div>
+</main>
+<script>
+function tog(h){h.parentElement.classList.toggle('open');h.querySelector('.arrow').textContent=h.parentElement.classList.contains('open')?'▴':'▾';}
+function copyCode(b){const t=b.closest('.code-wrap').querySelector('pre').textContent;navigator.clipboard.writeText(t).then(()=>{b.classList.add('ok');b.textContent='✓ Copiado';setTimeout(()=>{b.classList.remove('ok');b.textContent='Copiar';},1600);});}
+function upd(){const all=document.querySelectorAll('input[type=checkbox]');const d=[...all].filter(c=>c.checked).length;const p=Math.round(d*100/all.length);document.getElementById('pct').textContent=p;document.getElementById('bar').style.width=p+'%';}
+</script></body></html>
