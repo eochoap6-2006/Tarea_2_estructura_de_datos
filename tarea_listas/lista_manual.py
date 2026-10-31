@@ -11,10 +11,10 @@ class ListaPasajerosManual:
     # AÑADIR
     def añadir(self, pasajero):
         if self.cantidad == self.capacidad:
-            print("⚠ La lista está llena")
+            print("La lista está llena")
             return False
         if self.buscar(pasajero.cedula) != -1:
-            print("⚠ Ya existe un pasajero con esa cédula")
+            print(pasajero.cedula, "ya existe")
             return False
         self.datos[self.cantidad] = pasajero
         self.cantidad = self.cantidad + 1
@@ -23,7 +23,7 @@ class ListaPasajerosManual:
     # LISTAR
     def listar(self):
         if self.cantidad == 0:
-            print("(lista vacía)")
+            print("Lista vacía")
             return
         for i in range(self.cantidad):
             print(f"[{i}] {self.datos[i]}")
@@ -35,13 +35,13 @@ class ListaPasajerosManual:
     # INSERTAR
     def insertar(self, posicion, pasajero):
         if self.cantidad == self.capacidad:
-            print("⚠ La lista está llena")
+            print("La lista está llena")
             return False
         if posicion < 0 or posicion > self.cantidad:
             print("Posición no válida")
             return False
         if self.buscar(pasajero.cedula) != -1:
-            print("⚠ Ya existe un pasajero con esa cédula")
+            print(pasajero.cedula, "ya existe")
             return False
         i = self.cantidad
         while i > posicion:
@@ -76,7 +76,7 @@ class ListaPasajerosManual:
     def modificar(self, cedula, nuevo_nombre, nueva_edad):
         pos = self.buscar(cedula)
         if pos == -1:
-            print("El pasajero no existe")
+            print(cedula, "no existe")
             return False
         if not nuevo_nombre.strip() or nueva_edad < 0:
             print("Nombre o edad no válidos")
@@ -101,7 +101,7 @@ class ListaPasajerosManual:
     def eliminar_por_valor(self, cedula):
         pos = self.buscar(cedula)
         if pos == -1:
-            print("El pasajero no existe")
+            print(cedula, "no existe")
             return False
         self.eliminar_por_posicion(pos)
         return True
@@ -158,3 +158,4 @@ class ListaPasajerosManual:
         for i in range(self.cantidad):
             resultado[i] = self.datos[i].nombre.upper()
         return resultado
+

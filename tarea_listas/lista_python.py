@@ -10,7 +10,7 @@ class ListaPasajerosPython:
     # AÑADIR
     def añadir(self, pasajero):
         if self.buscar(pasajero.cedula) != -1:
-            print("⚠ Ya existe un pasajero con esa cédula")
+            print(pasajero.cedula, "ya existe")
             return False
         self.pasajeros.append(pasajero)
         return True
@@ -18,7 +18,7 @@ class ListaPasajerosPython:
     # LISTAR
     def listar(self):
         if not self.pasajeros:
-            print("(lista vacía)")
+            print("Lista vacía")
             return
         for i, p in enumerate(self.pasajeros):
             print(f"[{i}] {p}")
@@ -33,7 +33,7 @@ class ListaPasajerosPython:
             print("Posición no válida")
             return False
         if self.buscar(pasajero.cedula) != -1:
-            print("⚠ Ya existe un pasajero con esa cédula")
+            print(pasajero.cedula, "ya existe")
             return False
 
         # insert desplaza elementos: O(n).
@@ -59,7 +59,7 @@ class ListaPasajerosPython:
     def modificar(self, cedula, nuevo_nombre, nueva_edad):
         pos = self.buscar(cedula)
         if pos == -1:
-            print("El pasajero no existe")
+            print(cedula, "no existe")
             return False
         if not nuevo_nombre.strip() or nueva_edad < 0:
             print("Nombre o edad no válidos")
@@ -85,7 +85,7 @@ class ListaPasajerosPython:
         antes = len(self.pasajeros)
         self.pasajeros = [p for p in self.pasajeros if p.cedula != cedula]
         if len(self.pasajeros) == antes:
-            print("El pasajero no existe")
+            print(cedula, "no existe")
         return len(self.pasajeros) < antes
 
     # ORDENAR ASCENDENTE (manual: 7 líneas)
@@ -118,3 +118,4 @@ class ListaPasajerosPython:
     # NOMBRES EN MAYÚSCULAS (manual: 4 líneas)
     def nombres_en_mayusculas(self):
         return [p.nombre.upper() for p in self.pasajeros]
+
