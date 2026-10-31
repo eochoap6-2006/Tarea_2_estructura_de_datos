@@ -6,6 +6,7 @@ def ejercicio_p1():
     🧩 COMPRENSIÓN: len([x for x in lista if x == v])
     Salida esperada: 3 aparece 3 veces
     """
+    print('P1 — Contar apariciones de un valor')
     lista = [1, 3, 2, 3, 4, 3, 5]
     v = 3
     contador = 0

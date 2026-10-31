@@ -10,6 +10,7 @@ def ejercicio_t1():
     Importa así:  from lista_python import ListaPasajerosPython
                   from pasajero import Pasajero
     """
+    print('T1 — CRUD de pasajeros con clase Pasajero + list')
     from lista_python import ListaPasajerosPython
     from pasajero import Pasajero
 

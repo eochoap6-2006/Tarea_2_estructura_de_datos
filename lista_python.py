@@ -60,6 +60,7 @@ class ListaPasajerosPython:
         USA      : len()
         RETORNA  : int.   PRUEBA: datos de prueba -> 5
         """
+        # Versión manual: 1 líneas de código (sin def, docstring ni comentarios).
         return len(self.pasajeros)
 
     # -----------------------------------------------------------------
@@ -72,12 +73,15 @@ class ListaPasajerosPython:
         PIENSA   : ¿por qué ya no tienes que correr nada a la derecha?
                    (Python lo hace por ti... pero lo sigue haciendo: O(n)).
         """
+        # Versión manual: 16 líneas de código (sin def, docstring ni comentarios).
         if posicion < 0 or posicion > len(self.pasajeros):
             print("Posición no válida")
             return False
         if self.buscar(pasajero.cedula) != -1:
             print("⚠ Ya existe un pasajero con esa cédula")
             return False
+        # Python también desplaza los elementos a la derecha para abrir el hueco.
+        # Insertar al principio tiene complejidad O(n), aunque se escriba en una línea.
         self.pasajeros.insert(posicion, pasajero)
         return True
 
@@ -97,6 +101,7 @@ class ListaPasajerosPython:
                    next((i for i, p in enumerate(...) if ...), -1)
         PRUEBA   : buscar("0987654321") -> 2 ;  buscar("1111111111") -> -1
         """
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
         posiciones = [i for i, p in enumerate(self.pasajeros) if p.cedula == cedula]
         if not posiciones:
             return -1
@@ -115,6 +120,7 @@ class ListaPasajerosPython:
           4. return -1
         PRUEBA   : datos ordenados -> buscar_binaria("0923456789") -> 2
         """
+        # Versión manual: 11 líneas de código (sin def, docstring ni comentarios).
         cedulas = [p.cedula for p in self.pasajeros]
         i = bisect_left(cedulas, cedula)
         if i < len(cedulas) and cedulas[i] == cedula:
@@ -129,6 +135,7 @@ class ListaPasajerosPython:
         PASOS    : pos = self.buscar(cedula); si -1 -> False;
                    si no, cambia self.pasajeros[pos].nombre y .edad -> True
         """
+        # Versión manual: 10 líneas de código (sin def, docstring ni comentarios).
         pos = self.buscar(cedula)
         if pos == -1:
             print("El pasajero no existe")
@@ -148,6 +155,7 @@ class ListaPasajerosPython:
         USA      : self.pasajeros.pop(posicion)   (retorna el eliminado)
         VALIDA   : 0 <= posicion < len(...); si no -> mensaje y None
         """
+        # Versión manual: 9 líneas de código (sin def, docstring ni comentarios).
         if posicion < 0 or posicion >= len(self.pasajeros):
             print("Posición no válida")
             return None
@@ -166,6 +174,7 @@ class ListaPasajerosPython:
             return len(self.pasajeros) < antes      # True si eliminó algo
         Deja la FORMA 1 comentada para comparar.
         """
+        # Versión manual: 6 líneas de código (sin def, docstring ni comentarios).
         # FORMA 1 (remove), comentada para comparar:
         # pos = self.buscar(cedula)
         # if pos == -1:
@@ -188,7 +197,9 @@ class ListaPasajerosPython:
         USA      : self.pasajeros.sort(key=lambda p: p.cedula)
         PIENSA   : ¿qué hace key=? ¿qué pasaría sin él? (pruébalo)
         """
-        # key compara las cédulas; los objetos Pasajero no tienen orden propio.
+        # Versión manual: 7 líneas de código (sin def, docstring ni comentarios).
+        # key extrae la cédula de cada pasajero para comparar esos textos.
+        # Sin key aparece TypeError: Pasajero no define la comparación < entre objetos.
         self.pasajeros.sort(key=lambda p: p.cedula)
 
     # -----------------------------------------------------------------
@@ -196,6 +207,7 @@ class ListaPasajerosPython:
     # -----------------------------------------------------------------
     def ordenar_desc(self):
         """ USA : sort(key=..., reverse=True) """
+        # Versión manual: 7 líneas de código (sin def, docstring ni comentarios).
         self.pasajeros.sort(key=lambda p: p.cedula, reverse=True)
 
     # -----------------------------------------------------------------
@@ -203,6 +215,7 @@ class ListaPasajerosPython:
     # -----------------------------------------------------------------
     def reversar(self):
         """ USA : self.pasajeros.reverse()   (no es lo mismo que ordenar_desc) """
+        # Versión manual: 8 líneas de código (sin def, docstring ni comentarios).
         self.pasajeros.reverse()
 
     # -----------------------------------------------------------------
@@ -212,14 +225,23 @@ class ListaPasajerosPython:
         """
         PASOS    :
           nueva = ListaPasajerosPython()
-          nueva.pasajeros = self.pasajeros.copy()    # o self.pasajeros[:]
+          # La copia superficial crea otra lista con referencias a los mismos pasajeros.
+        # Reversar la copia cambia su orden; el orden del original permanece igual.
+        # Modificar un pasajero desde la copia también se ve en el original,
+        # porque ambos contienen el mismo objeto Pasajero.
+        nueva.pasajeros = self.pasajeros.copy()    # o self.pasajeros[:]
           return nueva
         ⚠ OJO    : es una copia SUPERFICIAL: las dos listas son distintas,
                    pero los objetos Pasajero de adentro son los MISMOS.
                    Reversar la copia no afecta al original;
                    modificar un pasajero de la copia... ¡sí! Pruébalo.
         """
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
         nueva = ListaPasajerosPython()
+        # La copia superficial crea otra lista con referencias a los mismos pasajeros.
+        # Reversar la copia cambia su orden; el orden del original permanece igual.
+        # Modificar un pasajero desde la copia también se ve en el original,
+        # porque ambos contienen el mismo objeto Pasajero.
         nueva.pasajeros = self.pasajeros.copy()
         return nueva
 
@@ -235,6 +257,7 @@ class ListaPasajerosPython:
           return nueva
         PRUEBA   : datos de prueba -> todos menos Beto
         """
+        # Versión manual: 5 líneas de código (sin def, docstring ni comentarios).
         nueva = ListaPasajerosPython()
         nueva.pasajeros = [p for p in self.pasajeros if p.es_mayor_de_edad()]
         return nueva
@@ -247,4 +270,5 @@ class ListaPasajerosPython:
         RETORNA  : list de str ->  [p.nombre.upper() for p in self.pasajeros]
         PRUEBA   : ['DIANA', 'ANA', 'LUIS', 'BETO', 'ELENA']
         """
+        # Versión manual: 4 líneas de código (sin def, docstring ni comentarios).
         return [p.nombre.upper() for p in self.pasajeros]

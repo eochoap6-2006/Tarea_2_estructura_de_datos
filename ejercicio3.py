@@ -8,6 +8,7 @@ def ejercicio_t3():
     Extra    : palabras = ["python", "a", "código", "el"] ordenadas con key=len
     Salida esperada: [1, 2, 3, 5, 7, 8, 9]
     """
+    print('T3 — Ordenar una lista (bubble sort)')
     lista = [5, 2, 8, 1, 9, 3, 7]
     copia = lista[:]
     for vuelta in range(len(copia) - 1):

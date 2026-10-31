@@ -11,6 +11,10 @@ ORGANIZACIÓN MODIFICADA (SEGÚN LO PEDIDO)
 - Se completaron los métodos, los dos submenús y los ocho ejercicios.
 - La búsqueda binaria del menú pide ordenar primero si la lista no está ordenada.
 - Se validan nombres, cédulas de 10 dígitos, edades, posiciones y duplicados.
+- En lista_python.py se comparan las líneas de los 13 métodos manuales
+  (sin contar def, docstrings, comentarios ni líneas vacías).
+- Las tres preguntas de la Fase 3 se responden en comentarios de insertar,
+  ordenar_asc y copiar. Cada ejercicio imprime su enunciado corto.
 
 OBJETIVO ORIGINAL
 - Implementar operaciones de lista en objetos Pasajero.
@@ -149,5 +153,5 @@ PRUEBAS Y ENTREGA (ADAPTADAS SOLO EN LA ORGANIZACIÓN)
 
 NOTA: El HTML original contempla una rúbrica de 10 puntos con menús
 para las listas, implementación manual y built-ins, ocho ejercicios,
-y comentarios de reflexión. La parte de menú de ejercicios es la única
+y comentarios de reflexión (incluidos en los métodos de Lista 2). La parte de menú de ejercicios es la única
 sustituida por archivos individuales, por indicación del usuario.

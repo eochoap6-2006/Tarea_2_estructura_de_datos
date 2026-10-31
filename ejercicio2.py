@@ -11,6 +11,7 @@ def ejercicio_t2():
                aprobados con COMPRENSIÓN: [n for n in notas if n >= 7]
     Salida esperada: Promedio 7.20 · Máx 10 (Diana) · Mín 5 · Aprobados 3 de 5
     """
+    print('T2 — Estadísticas de una lista de notas')
     nombres = ["Ana", "Luis", "Diana", "Beto", "Elena"]
     notas = [8, 6, 10, 7, 5]
 

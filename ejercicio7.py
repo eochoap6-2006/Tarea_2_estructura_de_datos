@@ -6,6 +6,7 @@ def ejercicio_p4():
     🐍 PYTHON (para comprobar): sorted(set(nums))[-2]
     Salida esperada: Mayor 9 · Segundo 8
     """
+    print('P4 — Segundo mayor (sin ordenar toda la lista)')
     nums = [5, 2, 9, 7, 9, 3, 8]
     mayor = None
     segundo = None

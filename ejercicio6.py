@@ -7,6 +7,7 @@ def ejercicio_p3():
                NO garantiza el orden)
     Salida esperada: [1, 3, 2, 4, 5]
     """
+    print('P3 — Números únicos manteniendo el orden')
     nums = [1, 3, 2, 3, 4, 1, 5, 2]
     unicos = []
     for numero in nums:

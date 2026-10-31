@@ -7,6 +7,7 @@ def ejercicio_p5():
     🐍 PYTHON (para comprobar): sorted(a + b)
     Salida esperada: [1, 2, 3, 4, 5, 6, 7, 8, 10]
     """
+    print('P5 — Fusionar dos listas ordenadas (sin sort)')
     a = [1, 3, 5, 7]
     b = [2, 4, 6, 8, 10]
     fusion = []

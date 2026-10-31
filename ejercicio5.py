@@ -7,6 +7,7 @@ def ejercicio_p2():
     🧩 COMPRENSIÓN: [lista[i] for i in range(len(lista)-1, -1, -1)]
     Salida esperada: [5, 4, 3, 2, 1]
     """
+    print('P2 — Invertir una lista SIN lista.reverse()')
     lista = [1, 2, 3, 4, 5]
     invertida = []
     for i in range(len(lista) - 1, -1, -1):
